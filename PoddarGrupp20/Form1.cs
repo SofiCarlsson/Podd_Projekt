@@ -1,32 +1,18 @@
 using BLL;
-<<<<<<< Updated upstream
-=======
 using Models;
->>>>>>> Stashed changes
 
 namespace PoddarGrupp20
 {
     public partial class Form1 : Form
     {
-<<<<<<< Updated upstream
         private Poddkontrollerare poddkontroll;
-=======
         private KategoriService kategoriService;
         private int? valdKategoriId = null; // Håller koll på vald kategori
->>>>>>> Stashed changes
 
         public Form1()
         {
             InitializeComponent();
-<<<<<<< Updated upstream
             poddkontroll = new Poddkontrollerare();
-        }
-
-        private void btnSök_Click(object sender, EventArgs e)
-        {
-            string rss = txtbRSS.Text;
-            poddkontroll.HämtaPoddarRSS(rss);
-=======
             kategoriService = new KategoriService();
             UppdateraListbox();
         }
@@ -38,6 +24,12 @@ namespace PoddarGrupp20
             {
                 lbxKategori.Items.Add(kategori); // Lägg till kategorier i listboxen
             }
+        }
+
+        private void btnSök_Click(object sender, EventArgs e)
+        {
+            string rss = txtbRSS.Text;
+            poddkontroll.HämtaPoddarRSS(rss);
         }
 
 
@@ -110,7 +102,6 @@ namespace PoddarGrupp20
             {
                 MessageBox.Show("Ingen kategori vald att ta bort.");
             }
->>>>>>> Stashed changes
         }
     }
 
