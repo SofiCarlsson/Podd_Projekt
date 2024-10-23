@@ -15,6 +15,7 @@ namespace PoddarGrupp20
             poddkontroll = new Poddkontrollerare();
             kategoriService = new KategoriService();
             UppdateraListbox();
+            this.Load += new EventHandler(Form1_Load);
         }
 
         private void UppdateraListbox()
@@ -23,6 +24,20 @@ namespace PoddarGrupp20
             foreach (var kategori in kategoriService.GetAllKategorier())
             {
                 lbxKategori.Items.Add(kategori); // Lägg till kategorier i listboxen
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            UpdateComboBox(); // Fyll ComboBox initialt
+        }
+
+        private void UpdateComboBox()
+        {
+            cbxKategori.Items.Clear(); // Rensa befintliga element
+            foreach (var item in lbxKategori.Items)
+            {
+                cbxKategori.Items.Add(item);
             }
         }
 
@@ -40,6 +55,7 @@ namespace PoddarGrupp20
                 kategoriService.LaggTillKategori(tbxKategori.Text);
                 tbxKategori.Clear();
                 UppdateraListbox();
+                UpdateComboBox();
             }
             catch (ArgumentException ex)
             {
@@ -73,6 +89,7 @@ namespace PoddarGrupp20
                     tbxKategori.Clear();
                     valdKategoriId = null; // Nollställ vald kategori efter uppdatering
                     UppdateraListbox();
+                    UpdateComboBox();
                 }
                 catch (ArgumentException ex)
                 {
@@ -96,6 +113,7 @@ namespace PoddarGrupp20
                     tbxKategori.Clear();
                     valdKategoriId = null; // Nollställ vald kategori efter borttagning
                     UppdateraListbox();
+                    UpdateComboBox();
                 }
             }
             else
