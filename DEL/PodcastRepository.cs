@@ -6,7 +6,7 @@ namespace DEL
     {
         private List<Podd> poddLista = new List<Podd>();
 
-        public void LäggTillNyhet(Podd podden)
+        public void LäggTillPodd(Podd podden)
         {
             poddLista.Add(podden);
         }
