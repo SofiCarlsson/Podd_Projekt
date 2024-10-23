@@ -56,7 +56,11 @@
             // btnSök
             // 
             btnSök.Location = new Point(38, 335);
+<<<<<<< Updated upstream
             btnSök.Margin = new Padding(4, 4, 4, 4);
+=======
+            btnSök.Margin = new Padding(4);
+>>>>>>> Stashed changes
             btnSök.Name = "btnSök";
             btnSök.Size = new Size(191, 44);
             btnSök.TabIndex = 0;
@@ -77,7 +81,11 @@
             // 
             lbxMinaPoddar.FormattingEnabled = true;
             lbxMinaPoddar.Location = new Point(60, 425);
+<<<<<<< Updated upstream
             lbxMinaPoddar.Margin = new Padding(4, 4, 4, 4);
+=======
+            lbxMinaPoddar.Margin = new Padding(4);
+>>>>>>> Stashed changes
             lbxMinaPoddar.Name = "lbxMinaPoddar";
             lbxMinaPoddar.Size = new Size(350, 388);
             lbxMinaPoddar.TabIndex = 2;
@@ -85,7 +93,11 @@
             // txtbRSS
             // 
             txtbRSS.Location = new Point(237, 127);
+<<<<<<< Updated upstream
             txtbRSS.Margin = new Padding(4, 4, 4, 4);
+=======
+            txtbRSS.Margin = new Padding(4);
+>>>>>>> Stashed changes
             txtbRSS.Name = "txtbRSS";
             txtbRSS.Size = new Size(300, 39);
             txtbRSS.TabIndex = 3;
@@ -104,7 +116,11 @@
             // 
             lbxAvsnitt.FormattingEnabled = true;
             lbxAvsnitt.Location = new Point(447, 425);
+<<<<<<< Updated upstream
             lbxAvsnitt.Margin = new Padding(4, 4, 4, 4);
+=======
+            lbxAvsnitt.Margin = new Padding(4);
+>>>>>>> Stashed changes
             lbxAvsnitt.Name = "lbxAvsnitt";
             lbxAvsnitt.Size = new Size(350, 388);
             lbxAvsnitt.TabIndex = 5;
@@ -113,7 +129,11 @@
             // 
             lbxInfo.FormattingEnabled = true;
             lbxInfo.Location = new Point(819, 425);
+<<<<<<< Updated upstream
             lbxInfo.Margin = new Padding(4, 4, 4, 4);
+=======
+            lbxInfo.Margin = new Padding(4);
+>>>>>>> Stashed changes
             lbxInfo.Name = "lbxInfo";
             lbxInfo.Size = new Size(350, 388);
             lbxInfo.TabIndex = 6;
@@ -122,7 +142,11 @@
             // 
             btnAndra.ForeColor = Color.Black;
             btnAndra.Location = new Point(265, 335);
+<<<<<<< Updated upstream
             btnAndra.Margin = new Padding(4, 4, 4, 4);
+=======
+            btnAndra.Margin = new Padding(4);
+>>>>>>> Stashed changes
             btnAndra.Name = "btnAndra";
             btnAndra.Size = new Size(146, 44);
             btnAndra.TabIndex = 7;
@@ -132,7 +156,11 @@
             // btnTabort
             // 
             btnTabort.Location = new Point(447, 335);
+<<<<<<< Updated upstream
             btnTabort.Margin = new Padding(4, 4, 4, 4);
+=======
+            btnTabort.Margin = new Padding(4);
+>>>>>>> Stashed changes
             btnTabort.Name = "btnTabort";
             btnTabort.Size = new Size(146, 44);
             btnTabort.TabIndex = 8;
@@ -143,7 +171,11 @@
             // 
             cbxKategori.FormattingEnabled = true;
             cbxKategori.Location = new Point(237, 274);
+<<<<<<< Updated upstream
             cbxKategori.Margin = new Padding(4, 4, 4, 4);
+=======
+            cbxKategori.Margin = new Padding(4);
+>>>>>>> Stashed changes
             cbxKategori.Name = "cbxKategori";
             cbxKategori.Size = new Size(300, 40);
             cbxKategori.TabIndex = 9;
@@ -162,41 +194,61 @@
             // btnAndraKategori
             // 
             btnAndraKategori.Location = new Point(1358, 191);
+<<<<<<< Updated upstream
             btnAndraKategori.Margin = new Padding(4, 4, 4, 4);
+=======
+            btnAndraKategori.Margin = new Padding(4);
+>>>>>>> Stashed changes
             btnAndraKategori.Name = "btnAndraKategori";
             btnAndraKategori.Size = new Size(146, 44);
             btnAndraKategori.TabIndex = 11;
             btnAndraKategori.Text = "Ändra";
             btnAndraKategori.UseVisualStyleBackColor = true;
+            btnAndraKategori.Click += btnAndraKategori_Click_1;
             // 
             // btnLaggTillKategori
             // 
             btnLaggTillKategori.Location = new Point(1202, 191);
+<<<<<<< Updated upstream
             btnLaggTillKategori.Margin = new Padding(4, 4, 4, 4);
+=======
+            btnLaggTillKategori.Margin = new Padding(4);
+>>>>>>> Stashed changes
             btnLaggTillKategori.Name = "btnLaggTillKategori";
             btnLaggTillKategori.Size = new Size(146, 44);
             btnLaggTillKategori.TabIndex = 12;
             btnLaggTillKategori.Text = "Lägg Till";
             btnLaggTillKategori.UseVisualStyleBackColor = true;
+            btnLaggTillKategori.Click += btnLaggTillKategori_Click;
             // 
             // btnTaBortKategori
             // 
             btnTaBortKategori.Location = new Point(1521, 191);
+<<<<<<< Updated upstream
             btnTaBortKategori.Margin = new Padding(4, 4, 4, 4);
+=======
+            btnTaBortKategori.Margin = new Padding(4);
+>>>>>>> Stashed changes
             btnTaBortKategori.Name = "btnTaBortKategori";
             btnTaBortKategori.Size = new Size(146, 44);
             btnTaBortKategori.TabIndex = 13;
             btnTaBortKategori.Text = "Ta Bort";
             btnTaBortKategori.UseVisualStyleBackColor = true;
+            btnTaBortKategori.Click += btnTaBortKategori_Click_1;
             // 
             // lbxKategori
             // 
             lbxKategori.FormattingEnabled = true;
             lbxKategori.Location = new Point(1262, 265);
+<<<<<<< Updated upstream
             lbxKategori.Margin = new Padding(4, 4, 4, 4);
+=======
+            lbxKategori.Margin = new Padding(4);
+>>>>>>> Stashed changes
             lbxKategori.Name = "lbxKategori";
             lbxKategori.Size = new Size(350, 548);
             lbxKategori.TabIndex = 14;
+            lbxKategori.SelectedIndexChanged += lbxKategori_SelectedIndexChanged_1;
             // 
             // lblTitelPodd
             // 
@@ -211,7 +263,11 @@
             // txbNamn
             // 
             txbNamn.Location = new Point(237, 210);
+<<<<<<< Updated upstream
             txbNamn.Margin = new Padding(4, 4, 4, 4);
+=======
+            txbNamn.Margin = new Padding(4);
+>>>>>>> Stashed changes
             txbNamn.Name = "txbNamn";
             txbNamn.Size = new Size(300, 39);
             txbNamn.TabIndex = 18;
@@ -229,7 +285,11 @@
             // tbxKategori
             // 
             tbxKategori.Location = new Point(1262, 127);
+<<<<<<< Updated upstream
             tbxKategori.Margin = new Padding(4, 4, 4, 4);
+=======
+            tbxKategori.Margin = new Padding(4);
+>>>>>>> Stashed changes
             tbxKategori.Name = "tbxKategori";
             tbxKategori.Size = new Size(350, 39);
             tbxKategori.TabIndex = 20;
@@ -267,7 +327,11 @@
             // btnFiltrera
             // 
             btnFiltrera.Location = new Point(592, 274);
+<<<<<<< Updated upstream
             btnFiltrera.Margin = new Padding(4, 4, 4, 4);
+=======
+            btnFiltrera.Margin = new Padding(4);
+>>>>>>> Stashed changes
             btnFiltrera.Name = "btnFiltrera";
             btnFiltrera.Size = new Size(146, 44);
             btnFiltrera.TabIndex = 24;
@@ -302,7 +366,11 @@
             Controls.Add(lbxMinaPoddar);
             Controls.Add(lblTitel);
             Controls.Add(btnSök);
+<<<<<<< Updated upstream
             Margin = new Padding(4, 4, 4, 4);
+=======
+            Margin = new Padding(4);
+>>>>>>> Stashed changes
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
