@@ -45,6 +45,22 @@ namespace PoddarGrupp20
         {
             string rss = txtbRSS.Text;
             poddkontroll.HämtaPoddarRSS(rss);
+
+            // Uppdatera ListBox med poddar
+            UppdateraPoddarListbox();
+        }
+
+        // Metoden för att uppdatera ListBox med poddar
+        private void UppdateraPoddarListbox()
+        {
+            lbxMinaPoddar.Items.Clear(); // Töm listboxen först
+            List<Podd> poddar = poddkontroll.HämtaAllaPoddar(); // Hämta alla poddar från BLL
+
+            // Lägg till rubriker i ListBox
+            foreach (var podd in poddar)
+            {
+                lbxAvsnitt.Items.Add(podd.Rubrik); // Visa bara rubriken
+            }
         }
 
 
