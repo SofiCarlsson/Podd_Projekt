@@ -33,7 +33,7 @@ namespace BLL
         }
 
         // Hämtar poddar från ett RSS-flöde
-        public void HämtaPoddarRSS(string rssLank, string valfrittNamn= null)
+        public void HämtaPoddarRSS(string rssLank, string valfrittNamn= null, string valdKategori = null)
         {
            // Kontrollera om podden med samma RSS-länk redan finns
            List<Podd> allaPoddar = poddRepository.HämtaAllaPoddar();
@@ -45,7 +45,7 @@ namespace BLL
                 }
 
                 // Implementera hämtning av RSS-flöde här
-                XmlReader varXMLlasare = XmlReader.Create(rssLank);
+            XmlReader varXMLlasare = XmlReader.Create(rssLank);
             SyndicationFeed poddFlode = SyndicationFeed.Load(varXMLlasare);
 
             string poddNamn = valfrittNamn ?? poddFlode.Title.Text;
@@ -57,13 +57,37 @@ namespace BLL
                     Namn = poddNamn,
                     RSSLank = rssLank,
                     Avsnitt = item.Title.Text,
-                    
+                    Kategori = valdKategori
+
                 };
 
                 poddRepository.LäggTillPodd(enPodd); //Sparar podden
                 System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Avsnitt.ToString());
             }
         }
+        public void AndraPodd(string gammaltNamn, string nyttNamn, string nyKategori)
+        {
+            var podd = poddRepository.HämtaAllaPoddar().FirstOrDefault(p => p.Namn == gammaltNamn);
+
+            if (podd != null)
+            {
+                podd.Namn = nyttNamn;
+                podd.Kategori = nyKategori; // Uppdatera kategori
+                System.Diagnostics.Debug.WriteLine("Podd uppdaterad: " + podd.Namn);
+            }
+        }
+        public void UppdateraPodd(Podd uppdateradPodd)
+        {
+            // Hitta den befintliga podden i listan och ersätt den med den uppdaterade
+            var befintligPodd = poddRepository.HämtaAllaPoddar().FirstOrDefault(p => p.RSSLank == uppdateradPodd.RSSLank);
+
+            if (befintligPodd != null)
+            {
+                befintligPodd.Namn = uppdateradPodd.Namn;
+                befintligPodd.Kategori = uppdateradPodd.Kategori;
+            }
+        }
+
     }
 }
 

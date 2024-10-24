@@ -45,8 +45,9 @@ namespace PoddarGrupp20
         {
             string rss = txtbRSS.Text;
             string poddNamn = txbNamn.Text;
+            string valdKategori = cbxKategori.SelectedItem?.ToString();
 
-            poddkontroll.HämtaPoddarRSS(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn);
+            poddkontroll.HämtaPoddarRSS(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn, valdKategori);
 
             // Uppdatera ListBox med poddar
             UppdateraPoddarListbox();
@@ -66,16 +67,20 @@ namespace PoddarGrupp20
         }
 
         private void UppdateraPoddarListbox()
+{
+    List<Podd> allaPoddar = poddkontroll.HämtaAllaPoddar(); // Hämta alla poddar
+    UppdateraPoddarListbox(allaPoddar); // Skicka med alla poddar
+}
+
+        private void UppdateraPoddarListbox(List<Podd> poddar)
         {
             lbxMinaPoddar.Items.Clear(); // Töm listboxen först
-            List<Podd> poddar = poddkontroll.HämtaAllaPoddar(); // Hämta alla poddar från BLL
 
-            // Lägg till rubriker i ListBox
             foreach (var podd in poddar)
             {
                 if (!lbxMinaPoddar.Items.Contains(podd.Namn))
                 {
-                    lbxMinaPoddar.Items.Add(podd.Namn); // Visa endast poddens namn
+                    lbxMinaPoddar.Items.Add(podd.Namn);
                 }
             }
         }
@@ -159,21 +164,16 @@ namespace PoddarGrupp20
         {
             if (lbxMinaPoddar.SelectedItem != null)
             {
-                string valtPoddNamn = lbxMinaPoddar.SelectedItem.ToString();
-                string nyttNamn = txbNamn.Text; // Det nya namnet från textrutan
+                string nyttNamn = txbNamn.Text;
+                string nyKategori = cbxKategori.SelectedItem?.ToString(); // Ny kategori
 
-                // Hämta poddens RSS-länk baserat på det valda namnet
-                Podd valdPodd = poddkontroll.HämtaAllaPoddar().FirstOrDefault(p => p.Namn == valtPoddNamn);
-                if (valdPodd != null)
-                {
-                    poddkontroll.AndraPoddNamn(valdPodd.RSSLank, nyttNamn);
-                    UppdateraPoddarListbox();
-                    MessageBox.Show("Podden har uppdaterats.");
-                }
+                poddkontroll.AndraPodd(lbxMinaPoddar.SelectedItem.ToString(), nyttNamn, nyKategori);
+
+                UppdateraPoddarListbox();
             }
             else
             {
-                MessageBox.Show("Ingen podd vald att ändra.");
+                MessageBox.Show("Ingen podd vald.");
             }
         }
 
@@ -199,6 +199,22 @@ namespace PoddarGrupp20
             else
             {
                 MessageBox.Show("Ingen podd vald att ta bort.");
+            }
+        }
+
+        private void btnFiltrera_Click(object sender, EventArgs e)
+        {
+            string valdKategori = cbxKategori.SelectedItem?.ToString();
+            List<Podd> allaPoddar = poddkontroll.HämtaAllaPoddar();
+
+            if (!string.IsNullOrEmpty(valdKategori))
+            {
+                var filtreradePoddar = allaPoddar.Where(p => p.Kategori == valdKategori).ToList();
+                UppdateraPoddarListbox(filtreradePoddar); // Uppdatera listbox med filtrerade poddar
+            }
+            else
+            {
+                UppdateraPoddarListbox(allaPoddar); // Visa alla poddar om ingen kategori är vald
             }
         }
     }

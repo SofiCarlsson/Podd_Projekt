@@ -279,6 +279,7 @@
             btnFiltrera.TabIndex = 24;
             btnFiltrera.Text = "Filtrera";
             btnFiltrera.UseVisualStyleBackColor = true;
+            btnFiltrera.Click += btnFiltrera_Click;
             // 
             // Form1
             // 
