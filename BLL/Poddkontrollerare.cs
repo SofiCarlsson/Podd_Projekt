@@ -21,17 +21,31 @@ namespace BLL
         }
 
         // Hämtar poddar från ett RSS-flöde
-        public void HämtaPoddarRSS(string rssLank)
+        public void HämtaPoddarRSS(string rssLank, string valfrittNamn= null)
         {
-            // Implementera hämtning av RSS-flöde här
-            XmlReader varXMLlasare = XmlReader.Create(rssLank);
+           // Kontrollera om podden med samma RSS-länk redan finns
+           List<Podd> allaPoddar = poddRepository.HämtaAllaPoddar();
+           if (allaPoddar.Any(p => p.RSSLank == rssLank))
+            {
+               // Om det redan finns en podd med samma RSS-länk, hoppa över att lägga till den
+               System.Diagnostics.Debug.WriteLine("Podd med denna RSS-länk finns redan: " + rssLank);
+                  return;
+                }
+
+                // Implementera hämtning av RSS-flöde här
+                XmlReader varXMLlasare = XmlReader.Create(rssLank);
             SyndicationFeed poddFlode = SyndicationFeed.Load(varXMLlasare);
+
+            string poddNamn = valfrittNamn ?? poddFlode.Title.Text;
 
             foreach (SyndicationItem item in poddFlode.Items)
             {
                 Podd enPodd = new Podd
                 {
-                    Avsnitt = item.Title.Text
+                    Namn = poddNamn,
+                    RSSLank = rssLank,
+                    Avsnitt = item.Title.Text,
+                    
                 };
 
                 poddRepository.LäggTillPodd(enPodd); //Sparar podden

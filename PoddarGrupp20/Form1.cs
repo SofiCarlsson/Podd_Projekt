@@ -44,14 +44,16 @@ namespace PoddarGrupp20
         private void btnSök_Click(object sender, EventArgs e)
         {
             string rss = txtbRSS.Text;
-            poddkontroll.HämtaPoddarRSS(rss);
+            string poddNamn = txbNamn.Text;
+
+            poddkontroll.HämtaPoddarRSS(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn);
 
             // Uppdatera ListBox med poddar
             UppdateraPoddarListbox();
         }
 
         // Metoden för att uppdatera ListBox med poddar
-        private void UppdateraPoddarListbox()
+        private void UppdateraAvsnittListbox()
         {
             lbxMinaPoddar.Items.Clear(); // Töm listboxen först
             List<Podd> poddar = poddkontroll.HämtaAllaPoddar(); // Hämta alla poddar från BLL
@@ -63,7 +65,7 @@ namespace PoddarGrupp20
             }
         }
 
-        private void UppdateraNamnPoddListbox()
+        private void UppdateraPoddarListbox()
         {
             lbxMinaPoddar.Items.Clear(); // Töm listboxen först
             List<Podd> poddar = poddkontroll.HämtaAllaPoddar(); // Hämta alla poddar från BLL
@@ -71,7 +73,10 @@ namespace PoddarGrupp20
             // Lägg till rubriker i ListBox
             foreach (var podd in poddar)
             {
-                lbxAvsnitt.Items.Add(podd.Avsnitt); // Visa bara avsnittsnamnen 
+                if (!lbxMinaPoddar.Items.Contains(podd.Namn))
+                {
+                    lbxMinaPoddar.Items.Add(podd.Namn);
+                } // Visa bara avsnittsnamnen 
             }
         }
 

@@ -8,7 +8,10 @@ namespace DEL
 
         public void LäggTillPodd(Podd podden)
         {
-            poddLista.Add(podden);
+            if (!poddLista.Any(p => p.RSSLank == podden.RSSLank))
+            {
+                poddLista.Add(podden);
+            }
         }
 
         public List<Podd> HämtaAllaPoddar()
