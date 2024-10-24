@@ -75,10 +75,11 @@ namespace PoddarGrupp20
             {
                 if (!lbxMinaPoddar.Items.Contains(podd.Namn))
                 {
-                    lbxMinaPoddar.Items.Add(podd.Namn);
-                } // Visa bara avsnittsnamnen 
+                    lbxMinaPoddar.Items.Add(podd.Namn); // Visa endast poddens namn
+                }
             }
         }
+
 
         private void btnLaggTillKategori_Click(object sender, EventArgs e)
         {
@@ -151,6 +152,53 @@ namespace PoddarGrupp20
             else
             {
                 MessageBox.Show("Ingen kategori vald att ta bort.");
+            }
+        }
+
+        private void btnAndra_Click(object sender, EventArgs e)
+        {
+            if (lbxMinaPoddar.SelectedItem != null)
+            {
+                string valtPoddNamn = lbxMinaPoddar.SelectedItem.ToString();
+                string nyttNamn = txbNamn.Text; // Det nya namnet från textrutan
+
+                // Hämta poddens RSS-länk baserat på det valda namnet
+                Podd valdPodd = poddkontroll.HämtaAllaPoddar().FirstOrDefault(p => p.Namn == valtPoddNamn);
+                if (valdPodd != null)
+                {
+                    poddkontroll.AndraPoddNamn(valdPodd.RSSLank, nyttNamn);
+                    UppdateraPoddarListbox();
+                    MessageBox.Show("Podden har uppdaterats.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingen podd vald att ändra.");
+            }
+        }
+
+        private void btnTabort_Click(object sender, EventArgs e)
+        {
+            if (lbxMinaPoddar.SelectedItem != null)
+            {
+                string valtPoddNamn = lbxMinaPoddar.SelectedItem.ToString();
+
+                // Hämta poddens RSS-länk baserat på det valda namnet
+                Podd valdPodd = poddkontroll.HämtaAllaPoddar().FirstOrDefault(p => p.Namn == valtPoddNamn);
+                if (valdPodd != null)
+                {
+                    DialogResult result = MessageBox.Show("Vill du verkligen ta bort den valda podden?", "Bekräfta borttagning", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        poddkontroll.TaBortPodd(valdPodd.RSSLank);
+                        UppdateraPoddarListbox();
+                        MessageBox.Show("Podden har tagits bort.");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingen podd vald att ta bort.");
             }
         }
     }

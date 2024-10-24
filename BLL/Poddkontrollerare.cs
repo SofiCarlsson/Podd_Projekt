@@ -20,6 +20,18 @@ namespace BLL
             return poddRepository.HämtaAllaPoddar();
         }
 
+        // Ändrar poddens namn
+        public void AndraPoddNamn(string rssLank, string nyttNamn)
+        {
+            poddRepository.AndraPoddNamn(rssLank, nyttNamn);
+        }
+
+        // Tar bort en podd
+        public void TaBortPodd(string rssLank)
+        {
+            poddRepository.TaBortPodd(rssLank);
+        }
+
         // Hämtar poddar från ett RSS-flöde
         public void HämtaPoddarRSS(string rssLank, string valfrittNamn= null)
         {
