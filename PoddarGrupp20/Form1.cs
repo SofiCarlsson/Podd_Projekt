@@ -59,10 +59,21 @@ namespace PoddarGrupp20
             // Lägg till rubriker i ListBox
             foreach (var podd in poddar)
             {
-                lbxAvsnitt.Items.Add(podd.Rubrik); // Visa bara rubriken
+                lbxAvsnitt.Items.Add(podd.Avsnitt); // Visa bara avsnittsnamnen 
             }
         }
 
+        private void UppdateraNamnPoddListbox()
+        {
+            lbxMinaPoddar.Items.Clear(); // Töm listboxen först
+            List<Podd> poddar = poddkontroll.HämtaAllaPoddar(); // Hämta alla poddar från BLL
+
+            // Lägg till rubriker i ListBox
+            foreach (var podd in poddar)
+            {
+                lbxAvsnitt.Items.Add(podd.Avsnitt); // Visa bara avsnittsnamnen 
+            }
+        }
 
         private void btnLaggTillKategori_Click(object sender, EventArgs e)
         {

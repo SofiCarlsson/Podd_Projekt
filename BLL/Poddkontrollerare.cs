@@ -31,11 +31,11 @@ namespace BLL
             {
                 Podd enPodd = new Podd
                 {
-                    Rubrik = item.Title.Text
+                    Avsnitt = item.Title.Text
                 };
 
                 poddRepository.LäggTillPodd(enPodd); //Sparar podden
-                System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Rubrik.ToString());
+                System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Avsnitt.ToString());
             }
         }
     }

@@ -3,7 +3,7 @@
     public class Podd
     {
       
-        public string Rubrik { get; set; }
+        public string Avsnitt { get; set; }
         
 
         public Podd()
@@ -11,9 +11,9 @@
 
         }
 
-        public Podd(string rubrik)
+        public Podd(string avsnitt)
         {
-           Rubrik = rubrik;
+           Avsnitt = avsnitt;
            
         }
 
