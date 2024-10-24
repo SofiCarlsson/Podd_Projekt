@@ -5,14 +5,14 @@ namespace PoddarGrupp20
 {
     public partial class Form1 : Form
     {
-        private Poddkontrollerare poddkontroll;
+        private PoddController poddkontroll;
         private KategoriService kategoriService;
         private int? valdKategoriId = null; // Håller koll på vald kategori
 
         public Form1()
         {
             InitializeComponent();
-            poddkontroll = new Poddkontrollerare();
+            poddkontroll = new PoddController();
             kategoriService = new KategoriService();
             UppdateraListbox();
             this.Load += new EventHandler(Form1_Load);

@@ -5,11 +5,11 @@ using System.ServiceModel.Syndication;
 
 namespace BLL
 {
-    public class Poddkontrollerare
+    public class PoddController
     {
         private PodcastRepository poddRepository;
 
-        public Poddkontrollerare()
+        public PoddController()
         {
             poddRepository = new PodcastRepository();
         }
