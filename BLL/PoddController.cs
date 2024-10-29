@@ -1,7 +1,7 @@
-﻿using DEL;
-using Models;
+﻿using Models;
 using System.Xml;
 using System.ServiceModel.Syndication;
+using DEL.Repository;
 
 namespace BLL
 {

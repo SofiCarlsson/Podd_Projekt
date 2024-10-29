@@ -25,6 +25,20 @@ namespace BLL
             return kategoriRepository.GetAll();
         }
 
+
+        public void UpdateCategory(int id, string newName)
+        {
+            var category = kategoriRepository.GetAll().FirstOrDefault(k => k.Id == id);
+
+            if (category == null)
+            {
+                throw new ArgumentException("Category not found.");
+            }
+
+            category.Namn = newName;
+            kategoriRepository.Update(category);
+        }
+
         // Ny metod för att ta bort kategori med bekräftelse
         public void DeleteKategori(int index)
         {

@@ -1,6 +1,6 @@
 ﻿using Models;
 
-namespace DEL
+namespace DEL.Repository
 {
     public class PodcastRepository
     {

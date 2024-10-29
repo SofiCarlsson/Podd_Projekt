@@ -21,7 +21,7 @@ namespace PoddarGrupp20
         private void UppdateraListbox()
         {
             lbxKategori.Items.Clear(); // Rensar listan först
-            foreach (var kategori in kategoriController.GetAllKategorier())
+            foreach (var kategori in kategoriController.RetrieveAllKategorier())
             {
                 lbxKategori.Items.Add(kategori); // Lägg till kategorier i listboxen
             }
@@ -90,7 +90,10 @@ namespace PoddarGrupp20
         {
             try
             {
-                kategoriController.LaggTillKategori(tbxKategori.Text);
+                // Exempel på automatisk ID-tilldelning
+                int nyttId = kategoriController.RetrieveAllKategorier().Count + 1; // Ger ett nytt ID baserat på antal kategorier
+
+                kategoriController.CreateKategori(nyttId, tbxKategori.Text);
                 tbxKategori.Clear();
                 UppdateraListbox();
                 UpdateComboBox();
@@ -123,7 +126,7 @@ namespace PoddarGrupp20
             {
                 try
                 {
-                    kategoriController.AndraKategori(valdKategoriId.Value, tbxKategori.Text);
+                    kategoriController.UpdateCategory(valdKategoriId.Value, tbxKategori.Text);
                     tbxKategori.Clear();
                     valdKategoriId = null; // Nollställ vald kategori efter uppdatering
                     UppdateraListbox();
@@ -147,7 +150,7 @@ namespace PoddarGrupp20
                 DialogResult result = MessageBox.Show("Vill du verkligen ta bort den valda kategorin?", "Bekräfta borttagning", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    kategoriController.TaBortKategori(valdKategoriId.Value);
+                    kategoriController.DeleteKategori(valdKategoriId.Value);
                     tbxKategori.Clear();
                     valdKategoriId = null; // Nollställ vald kategori efter borttagning
                     UppdateraListbox();

@@ -38,14 +38,20 @@ namespace DEL.Repository
         }
 
         // Uppdaterar en kategori och sparar listan
-        public void Update(int index, Kategori theNewObject)
+        public void Update(Kategori theNewObject)
         {
-            if (index >= 0 && index < ListAvKategori.Count)
+            var index = ListAvKategori.FindIndex(k => k.Id == theNewObject.Id);
+            if (index != -1)
             {
                 ListAvKategori[index] = theNewObject;
                 SaveChanges();
             }
+            else
+            {
+                throw new ArgumentException("Category not found.");
+            }
         }
+
 
         // Tar bort en kategori och sparar listan
         public void Delete(int index)

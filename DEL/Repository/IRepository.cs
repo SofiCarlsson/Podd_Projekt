@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace DEL.Repository
         List<T> GetAll();
         T GetById(string Id);
         void Insert(T theObject);
-        void Update(int index, T theObject);
+        void Update(Kategori theNewObject);
         void Delete(int index);
         void SaveChanges();
 

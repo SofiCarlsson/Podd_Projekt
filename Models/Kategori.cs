@@ -11,6 +11,12 @@ namespace Models
         public int Id { get; set; }
         public string Namn { get; set; }
 
+        // Parameterlös konstruktor för serialisering
+        public Kategori()
+        {
+        }
+
+        // Konstruktor med parametrar
         public Kategori(int id, string namn)
         {
             Id = id;
@@ -22,5 +28,4 @@ namespace Models
             return Namn; // Detta gör att Namn visas i listboxen
         }
     }
-
 }
