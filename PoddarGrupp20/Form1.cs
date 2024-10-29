@@ -6,14 +6,14 @@ namespace PoddarGrupp20
     public partial class Form1 : Form
     {
         private PoddController poddkontroll;
-        private KategoriService kategoriService;
+        private KategoriController kategoriController;
         private int? valdKategoriId = null; // Håller koll på vald kategori
 
         public Form1()
         {
             InitializeComponent();
             poddkontroll = new PoddController();
-            kategoriService = new KategoriService();
+            kategoriController = new KategoriController();
             UppdateraListbox();
             this.Load += new EventHandler(Form1_Load);
         }
@@ -21,7 +21,7 @@ namespace PoddarGrupp20
         private void UppdateraListbox()
         {
             lbxKategori.Items.Clear(); // Rensar listan först
-            foreach (var kategori in kategoriService.GetAllKategorier())
+            foreach (var kategori in kategoriController.GetAllKategorier())
             {
                 lbxKategori.Items.Add(kategori); // Lägg till kategorier i listboxen
             }
@@ -90,7 +90,7 @@ namespace PoddarGrupp20
         {
             try
             {
-                kategoriService.LaggTillKategori(tbxKategori.Text);
+                kategoriController.LaggTillKategori(tbxKategori.Text);
                 tbxKategori.Clear();
                 UppdateraListbox();
                 UpdateComboBox();
@@ -123,7 +123,7 @@ namespace PoddarGrupp20
             {
                 try
                 {
-                    kategoriService.AndraKategori(valdKategoriId.Value, tbxKategori.Text);
+                    kategoriController.AndraKategori(valdKategoriId.Value, tbxKategori.Text);
                     tbxKategori.Clear();
                     valdKategoriId = null; // Nollställ vald kategori efter uppdatering
                     UppdateraListbox();
@@ -147,7 +147,7 @@ namespace PoddarGrupp20
                 DialogResult result = MessageBox.Show("Vill du verkligen ta bort den valda kategorin?", "Bekräfta borttagning", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    kategoriService.TaBortKategori(valdKategoriId.Value);
+                    kategoriController.TaBortKategori(valdKategoriId.Value);
                     tbxKategori.Clear();
                     valdKategoriId = null; // Nollställ vald kategori efter borttagning
                     UppdateraListbox();
