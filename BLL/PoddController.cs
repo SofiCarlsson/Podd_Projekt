@@ -14,19 +14,19 @@ namespace BLL
             poddRepository = new PodcastRepository();
         }
 
-        // Hämtar alla poddar från datalagrets poddRepository
+        //Metod för att hämtar alla poddar från datalagrets poddRepository
         public List<Podd> HämtaAllaPoddar()
         {
             return poddRepository.HämtaAllaPoddar();
         }
 
-        // Ändrar poddens namn
+        // Metod för att ändrar poddens namn
         public void AndraPoddNamn(string rssLank, string nyttNamn)
         {
             poddRepository.AndraPoddNamn(rssLank, nyttNamn);
         }
 
-        // Tar bort en podd
+        // Metdod för att tar bort en podd
         public void TaBortPodd(string rssLank)
         {
             poddRepository.TaBortPodd(rssLank);
@@ -65,6 +65,8 @@ namespace BLL
                 System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Avsnitt.ToString());
             }
         }
+
+        //Metod för att ändra namnet på en podd.
         public void AndraPodd(string gammaltNamn, string nyttNamn, string nyKategori)
         {
             var podd = poddRepository.HämtaAllaPoddar().FirstOrDefault(p => p.Namn == gammaltNamn);
@@ -76,6 +78,9 @@ namespace BLL
                 System.Diagnostics.Debug.WriteLine("Podd uppdaterad: " + podd.Namn);
             }
         }
+
+        //Metod för att uppdatera en podd?????????? kolla på denna igen 
+        // kolla på igen gör den samma som ovan??
         public void UppdateraPodd(Podd uppdateradPodd)
         {
             // Hitta den befintliga podden i listan och ersätt den med den uppdaterade

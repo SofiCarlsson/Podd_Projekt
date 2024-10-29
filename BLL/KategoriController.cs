@@ -14,18 +14,23 @@ namespace BLL
             kategoriRepository = new KategoriRepository();
         }
 
+
+        //Metod för att skapa en ny kategori.
         public void CreateKategori(int id, string namn)
         {
             Kategori kategoriObj = new Kategori(id, namn);
             kategoriRepository.Insert(kategoriObj);
         }
 
+
+        //Lista alla kategorier i en Lista.
         public List<Kategori> RetrieveAllKategorier()
         {
             return kategoriRepository.GetAll();
         }
 
 
+        //Metod för att uppdatera kategorinamnet till ett nytt namn.
         public void UpdateCategory(int id, string newName)
         {
             var category = kategoriRepository.GetAll().FirstOrDefault(k => k.Id == id);
@@ -39,7 +44,8 @@ namespace BLL
             kategoriRepository.Update(category);
         }
 
-        // Ny metod för att ta bort kategori med bekräftelse
+
+        // Metod för att ta bort kategori med bekräftelse
         public void DeleteKategori(int index)
         {
             if (index < 0 || index >= kategoriRepository.GetAll().Count)
