@@ -126,6 +126,18 @@ namespace PoddarGrupp20
         {
             if (valdKategoriId.HasValue)
             {
+                Validering validering = new Validering();
+
+                // Anropa NotEmpty för att validera inputen
+                string errorMessage = validering.NotEmpty(tbxKategori.Text);
+
+                // Kolla om det finns ett felmeddelande
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    MessageBox.Show(errorMessage);
+                    return; // Avbryt om valideringen misslyckades
+                }
+
                 try
                 {
                     kategoriController.UpdateCategory(valdKategoriId.Value, tbxKategori.Text);
