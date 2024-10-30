@@ -8,6 +8,8 @@ namespace PoddarGrupp20
         private PoddController poddkontroll;
         private KategoriController kategoriController;
         private int? valdKategoriId = null; // Håller koll på vald kategori
+        private Validering validering = new Validering(); // Skapa en instans av Validering
+
 
         public Form1()
         {
@@ -171,8 +173,21 @@ namespace PoddarGrupp20
                 string nyttNamn = txbNamn.Text;
                 string nyKategori = cbxKategori.SelectedItem?.ToString(); // Ny kategori
 
-                poddkontroll.AndraPodd(lbxMinaPoddar.SelectedItem.ToString(), nyttNamn, nyKategori);
+                // Skapa en instans av Validering
+                Validering validering = new Validering();
 
+                // Anropa NotEmpty och spara resultatet
+                string errorMessage = validering.NotEmpty(nyttNamn);
+
+                // Kolla om det finns ett felmeddelande
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    // Visa felmeddelandet
+                    MessageBox.Show(errorMessage);
+                    return; // Avbryt om valideringen misslyckades
+                }
+
+                poddkontroll.AndraPodd(lbxMinaPoddar.SelectedItem.ToString(), nyttNamn, nyKategori);
                 UppdateraPoddarListbox();
             }
             else
