@@ -46,29 +46,17 @@ namespace BLL
 
 
         // Metod för att ta bort kategori med bekräftelse
-        public void DeleteKategori(int index)
+        public void DeleteKategori(int id)
         {
-            if (index < 0 || index >= kategoriRepository.GetAll().Count)
+            var kategori = kategoriRepository.GetAll().FirstOrDefault(k => k.Id == id);
+            if (kategori != null)
             {
-                Console.WriteLine("Ogiltigt index. Kategori kunde inte tas bort.");
-                return;
-            }
-
-            // Fråga användaren om de är säkra på att de vill ta bort kategorin
-            Console.WriteLine("Är du säker på att du vill ta bort denna kategori? (ja/nej)");
-            string svar = Console.ReadLine()?.ToLower();
-
-            if (svar == "ja")
-            {
-                kategoriRepository.Delete(index);
-                Console.WriteLine("Kategori har tagits bort.");
-            }
-            else
-            {
-                Console.WriteLine("Kategori har inte tagits bort.");
+                kategoriRepository.Delete(id); // Använd kategori-id för att radera
             }
         }
+
     }
 }
+    
 
 

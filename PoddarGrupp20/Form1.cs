@@ -145,14 +145,14 @@ namespace PoddarGrupp20
 
         private void btnTaBortKategori_Click_1(object sender, EventArgs e)
         {
-            if (valdKategoriId.HasValue)
+            if (valdKategoriId.HasValue) // Kontrollera att id finns
             {
                 DialogResult result = MessageBox.Show("Vill du verkligen ta bort den valda kategorin?", "Bekräfta borttagning", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    kategoriController.DeleteKategori(valdKategoriId.Value);
+                    kategoriController.DeleteKategori(valdKategoriId.Value); // Använd id för att ta bort
                     tbxKategori.Clear();
-                    valdKategoriId = null; // Nollställ vald kategori efter borttagning
+                    valdKategoriId = null; // Återställ vald kategori efter borttagning
                     UppdateraListbox();
                     UpdateComboBox();
                 }
@@ -162,6 +162,7 @@ namespace PoddarGrupp20
                 MessageBox.Show("Ingen kategori vald att ta bort.");
             }
         }
+
 
         private void btnAndra_Click(object sender, EventArgs e)
         {

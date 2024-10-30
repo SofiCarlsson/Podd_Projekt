@@ -54,14 +54,16 @@ namespace DEL.Repository
 
 
         // Tar bort en kategori och sparar listan
-        public void Delete(int index)
+        public void Delete(int id)
         {
-            if (index >= 0 && index < ListAvKategori.Count)
+            var kategori = GetAll().FirstOrDefault(k => k.Id == id);
+            if (kategori != null)
             {
-                ListAvKategori.RemoveAt(index);
+                GetAll().Remove(kategori);
                 SaveChanges();
             }
         }
+
 
         // Sparar kategorierna till en fil genom att serialisera dem
         public void SaveChanges()
