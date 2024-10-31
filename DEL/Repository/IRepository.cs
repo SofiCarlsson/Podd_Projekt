@@ -10,10 +10,11 @@ namespace DEL.Repository
     public interface IRepository<T>
     {
         List<T> GetAll();
-        T GetById(int id);   // ID är nu av typen int
+        T GetById(string id);
         void Insert(T theObject);
         void Update(T theNewObject);
-        void Delete(int id);  // ID är nu int
+        void Delete(string id);
         void SaveChanges();
     }
 }
+

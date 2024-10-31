@@ -12,7 +12,9 @@ namespace Models
         public string Namn { get; set; }
 
         // Parameterlös konstruktor för serialisering
-        public Kategori() { }
+        public Kategori()
+        {
+        }
 
         // Konstruktor med parametrar
         public Kategori(int id, string namn)

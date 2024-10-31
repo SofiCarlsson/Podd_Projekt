@@ -2,6 +2,7 @@
 using Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BLL
 {
@@ -14,20 +15,23 @@ namespace BLL
             kategoriRepository = new KategoriRepository();
         }
 
-        public void CreateKategori(int id, string namn)  // Nu int id
+        // Metod för att skapa en ny kategori.
+        public void CreateKategori(int id, string namn)
         {
             Kategori kategoriObj = new Kategori(id, namn);
             kategoriRepository.Insert(kategoriObj);
         }
 
+        // Lista alla kategorier i en Lista.
         public List<Kategori> RetrieveAllKategorier()
         {
             return kategoriRepository.GetAll();
         }
 
+        // Metod för att uppdatera kategorinamnet till ett nytt namn.
         public void UpdateCategory(int id, string newName)
         {
-            var category = kategoriRepository.GetById(id); // Inga konverteringar behövs
+            var category = kategoriRepository.GetAll().FirstOrDefault(k => k.Id == id);
 
             if (category == null)
             {
@@ -35,19 +39,20 @@ namespace BLL
             }
 
             category.Namn = newName;
-            kategoriRepository.Update(category);
+            kategoriRepository.Update(category); // Kommer att spara ändringar automatiskt
         }
 
-        public void DeleteKategori(int id) // Int ID hanteras direkt
+        // Metod för att ta bort kategori med bekräftelse
+        public void DeleteKategori(int id)
         {
-            var kategori = kategoriRepository.GetById(id);
+            var kategori = kategoriRepository.GetById(id.ToString()); // Använd GetById för att hämta kategorin
             if (kategori != null)
             {
-                kategoriRepository.Delete(id);  // Använd kategori-ID direkt
+                kategoriRepository.Delete(kategori.Id.ToString()); // Ta bort baserat på ID
             }
             else
             {
-                throw new ArgumentException("Category not found.");
+                throw new ArgumentException("Category not found."); // Hantera fallet där kategorin inte hittades
             }
         }
     }

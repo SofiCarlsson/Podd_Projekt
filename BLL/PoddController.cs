@@ -2,8 +2,6 @@
 using System.Xml;
 using System.ServiceModel.Syndication;
 using DEL.Repository;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BLL
 {
@@ -16,45 +14,39 @@ namespace BLL
             poddRepository = new PodcastRepository();
         }
 
-        // Hämtar alla poddar från datalagrets poddRepository
+        //Metod för att hämtar alla poddar från datalagrets poddRepository
         public List<Podd> HämtaAllaPoddar()
         {
             return poddRepository.HämtaAllaPoddar();
         }
 
-        // Metod för att ändra poddens namn
+        // Metod för att ändrar poddens namn
         public void AndraPoddNamn(string rssLank, string nyttNamn)
         {
             poddRepository.AndraPoddNamn(rssLank, nyttNamn);
-            poddRepository.SaveChanges(); // Spara ändringar efter att namnet ändrats
         }
 
-        // Metod för att ta bort en podd
+        // Metdod för att tar bort en podd
         public void TaBortPodd(string rssLank)
         {
             poddRepository.TaBortPodd(rssLank);
-            poddRepository.SaveChanges(); // Spara ändringar efter att podden tagits bort
         }
 
         // Hämtar poddar från ett RSS-flöde
-<<<<<<< Updated upstream
 
         //Skriv en metod för att bara hämta ut namnet 
         public void HämtaPoddarRSS(string rssLank, string valfrittNamn= null, string valdKategori = null)
-=======
-        public void HämtaPoddarRSS(string rssLank, string valfrittNamn = null, string valdKategori = null)
->>>>>>> Stashed changes
         {
-            // Kontrollera om podden med samma RSS-länk redan finns
-            List<Podd> allaPoddar = poddRepository.HämtaAllaPoddar();
-            if (allaPoddar.Any(p => p.RSSLank == rssLank))
+           // Kontrollera om podden med samma RSS-länk redan finns
+           List<Podd> allaPoddar = poddRepository.HämtaAllaPoddar();
+           if (allaPoddar.Any(p => p.RSSLank == rssLank))
             {
-                // Om det redan finns en podd med samma RSS-länk, hoppa över att lägga till den
-                System.Diagnostics.Debug.WriteLine("Podd med denna RSS-länk finns redan: " + rssLank);
-                return;
-            }
+               // Om det redan finns en podd med samma RSS-länk, hoppa över att lägga till den
+               System.Diagnostics.Debug.WriteLine("Podd med denna RSS-länk finns redan: " + rssLank);
+                  return;
+                }
 
-            // Implementera hämtning av RSS-flöde här
+                // Implementera hämtning av RSS-flöde här
             XmlReader varXMLlasare = XmlReader.Create(rssLank);
             SyndicationFeed poddFlode = SyndicationFeed.Load(varXMLlasare);
 
@@ -68,41 +60,41 @@ namespace BLL
                     RSSLank = rssLank,
                     Avsnitt = item.Title.Text,
                     Kategori = valdKategori
+
                 };
 
-                poddRepository.LäggTillPodd(enPodd); // Lägger till podden
+                poddRepository.LäggTillPodd(enPodd); //Sparar podden
                 System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Avsnitt.ToString());
             }
-
-            poddRepository.SaveChanges(); // Spara ändringar efter att poddar har lagts till
         }
 
-        // Metod för att uppdatera en podd
+        //Metod för att ändra namnet på en podd.
+        public void AndraPodd(string gammaltNamn, string nyttNamn, string nyKategori)
+        {
+            var podd = poddRepository.HämtaAllaPoddar().FirstOrDefault(p => p.Namn == gammaltNamn);
+
+            if (podd != null)
+            {
+                podd.Namn = nyttNamn;
+                podd.Kategori = nyKategori; // Uppdatera kategori
+                System.Diagnostics.Debug.WriteLine("Podd uppdaterad: " + podd.Namn);
+            }
+        }
+
+        //Metod för att uppdatera en podd?????????? kolla på denna igen 
+        // kolla på igen gör den samma som ovan??
         public void UppdateraPodd(Podd uppdateradPodd)
         {
-
+            // Hitta den befintliga podden i listan och ersätt den med den uppdaterade
             var befintligPodd = poddRepository.HämtaAllaPoddar().FirstOrDefault(p => p.RSSLank == uppdateradPodd.RSSLank);
 
             if (befintligPodd != null)
             {
                 befintligPodd.Namn = uppdateradPodd.Namn;
                 befintligPodd.Kategori = uppdateradPodd.Kategori;
-
-                poddRepository.SaveChanges(); // Spara ändringar efter uppdatering
-                System.Diagnostics.Debug.WriteLine("Podd uppdaterad: " + befintligPodd.Namn);
-            }
-            else
-            {
-                throw new ArgumentException("Podd inte funnen.");
             }
         }
 
     }
 }
-
-
-
-
-
-
 
