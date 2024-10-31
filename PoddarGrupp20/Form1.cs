@@ -153,7 +153,7 @@ namespace PoddarGrupp20
                     kategoriController.UpdateCategory(valdKategoriId.Value, tbxKategori.Text);
                     tbxKategori.Clear();
                     valdKategoriId = null; // Nollställ vald kategori efter uppdatering
-                    UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
+                    UppdateraKategoriListbox();
                     UpdateComboBox();
                 }
                 catch (ArgumentException ex)
@@ -169,21 +169,37 @@ namespace PoddarGrupp20
 
         private void btnTaBortKategori_Click_1(object sender, EventArgs e)
         {
-            if (valdKategoriId.HasValue) // Kontrollera att id finns
+            if (valdKategoriId.HasValue)
             {
-                DialogResult result = MessageBox.Show("Vill du verkligen ta bort den valda kategorin?", "Bekräfta borttagning", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
+                Validering validering = new Validering();
+
+                // Anropa NotEmpty för att validera inputen
+                string errorMessage = validering.NotEmpty(tbxKategori.Text);
+
+                // Kolla om det finns ett felmeddelande
+                if (!string.IsNullOrEmpty(errorMessage))
                 {
-                    kategoriController.DeleteKategori(valdKategoriId.Value); // Använd id för att ta bort
+                    MessageBox.Show(errorMessage);
+                    return; // Avbryt om valideringen misslyckas
+                }
+
+                try
+                {
+                    kategoriController.UpdateCategory(valdKategoriId.Value, tbxKategori.Text);
                     tbxKategori.Clear();
-                    valdKategoriId = null; // Återställ vald kategori efter borttagning
+                    valdKategoriId = null; // Nollställ vald kategori efter uppdatering
                     UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
                     UpdateComboBox();
+                    UppdateraKategoriListbox(); // Lägg till detta för att uppdatera lbxKategori
+                }
+                catch (ArgumentException ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
             {
-                MessageBox.Show("Ingen kategori vald att ta bort.");
+                MessageBox.Show("Ingen kategori vald att ändra.");
             }
         }
 
