@@ -41,33 +41,41 @@ namespace BLL
             List<Podd> allaPoddar = poddRepository.HämtaAllaPoddar();
             if (allaPoddar.Any(p => p.RSSLank == rssLank))
             {
-                // Om det redan finns en podd med samma RSS-länk, hoppa över att lägga till den
                 System.Diagnostics.Debug.WriteLine("Podd med denna RSS-länk finns redan: " + rssLank);
                 return;
             }
 
-            // Implementera hämtning av RSS-flöde här
-            XmlReader varXMLlasare = XmlReader.Create(rssLank);
-            SyndicationFeed poddFlode = SyndicationFeed.Load(varXMLlasare);
-
-            string poddNamn = valfrittNamn ?? poddFlode.Title.Text;
-
-            Podd enPodd = new Podd
+            var settings = new XmlReaderSettings
             {
-                Namn = poddNamn,
-                RSSLank = rssLank,
-                Kategori = valdKategori
+                DtdProcessing = DtdProcessing.Parse
             };
 
-            foreach (SyndicationItem item in poddFlode.Items)
+            using (XmlReader varXMLlasare = XmlReader.Create(rssLank, settings))
             {
-                enPodd.Avsnitt.Add(item.Title.Text); // Lägg till avsnittet i listan
-                System.Diagnostics.Debug.WriteLine("Avsnitt tillagt: " + item.Title.Text);
-            }
+                SyndicationFeed poddFlode = SyndicationFeed.Load(varXMLlasare);
 
-            poddRepository.LäggTillPodd(enPodd); //Sparar podden med alla avsnitt
-            System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Namn);
+                string poddNamn = valfrittNamn ?? poddFlode.Title.Text;
+
+                Podd enPodd = new Podd
+                {
+                    Namn = poddNamn,
+                    RSSLank = rssLank,
+                    Kategori = valdKategori,
+                    AvsnittBeskrivningar = new Dictionary<string, string>() // Se till att du har denna struktur i Podd
+                };
+
+                foreach (SyndicationItem item in poddFlode.Items)
+                {
+                    enPodd.Avsnitt.Add(item.Title.Text); // Lägg till avsnittet i listan
+                    enPodd.AvsnittBeskrivningar[item.Title.Text] = item.Summary?.Text ?? "Ingen beskrivning tillgänglig"; // Spara beskrivningen
+                    System.Diagnostics.Debug.WriteLine("Avsnitt tillagt: " + item.Title.Text);
+                }
+
+                poddRepository.LäggTillPodd(enPodd);
+                System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Namn);
+            }
         }
+
 
 
         //Metod för att ändra namnet på en podd.

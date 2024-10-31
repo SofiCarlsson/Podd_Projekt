@@ -300,16 +300,22 @@ namespace PoddarGrupp20
                 // Hämta podd och dess avsnitt
                 Podd valdPodd = poddkontroll.HämtaAllaPoddar().FirstOrDefault(p => p.Namn == valtPoddNamn);
 
-                if (valdPodd != null && valdPodd.Avsnitt != null)
+                if (valdPodd != null && valdPodd.Avsnitt.Contains(valtAvsnittNamn))
                 {
                     lbxInfo.Items.Clear();
-                    lbxInfo.Items.Add("Avsnitt: " + valdPodd.Avsnitt);
+                    lbxInfo.Items.Add("Avsnitt: " + valtAvsnittNamn);
                     lbxInfo.Items.Add("Kategori: " + valdPodd.Kategori);
                     lbxInfo.Items.Add("RSS Länk: " + valdPodd.RSSLank);
-                    // Lägg till annan info om avsnittet här om tillgänglig
+
+                    // Lägg till avsnittsbeskrivningen
+                    string beskrivning = valdPodd.AvsnittBeskrivningar.ContainsKey(valtAvsnittNamn)
+                        ? valdPodd.AvsnittBeskrivningar[valtAvsnittNamn]
+                        : "Ingen beskrivning tillgänglig";
+                    lbxInfo.Items.Add("Beskrivning: " + beskrivning);
                 }
             }
         }
+
     }
 
 }
