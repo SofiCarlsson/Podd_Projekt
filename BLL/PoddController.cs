@@ -35,38 +35,40 @@ namespace BLL
         // Hämtar poddar från ett RSS-flöde
 
         //Skriv en metod för att bara hämta ut namnet 
-        public void HämtaPoddarRSS(string rssLank, string valfrittNamn= null, string valdKategori = null)
+        public void HämtaPoddarRSS(string rssLank, string valfrittNamn = null, string valdKategori = null)
         {
-           // Kontrollera om podden med samma RSS-länk redan finns
-           List<Podd> allaPoddar = poddRepository.HämtaAllaPoddar();
-           if (allaPoddar.Any(p => p.RSSLank == rssLank))
+            // Kontrollera om podden med samma RSS-länk redan finns
+            List<Podd> allaPoddar = poddRepository.HämtaAllaPoddar();
+            if (allaPoddar.Any(p => p.RSSLank == rssLank))
             {
-               // Om det redan finns en podd med samma RSS-länk, hoppa över att lägga till den
-               System.Diagnostics.Debug.WriteLine("Podd med denna RSS-länk finns redan: " + rssLank);
-                  return;
-                }
+                // Om det redan finns en podd med samma RSS-länk, hoppa över att lägga till den
+                System.Diagnostics.Debug.WriteLine("Podd med denna RSS-länk finns redan: " + rssLank);
+                return;
+            }
 
-                // Implementera hämtning av RSS-flöde här
+            // Implementera hämtning av RSS-flöde här
             XmlReader varXMLlasare = XmlReader.Create(rssLank);
             SyndicationFeed poddFlode = SyndicationFeed.Load(varXMLlasare);
 
             string poddNamn = valfrittNamn ?? poddFlode.Title.Text;
 
+            Podd enPodd = new Podd
+            {
+                Namn = poddNamn,
+                RSSLank = rssLank,
+                Kategori = valdKategori
+            };
+
             foreach (SyndicationItem item in poddFlode.Items)
             {
-                Podd enPodd = new Podd
-                {
-                    Namn = poddNamn,
-                    RSSLank = rssLank,
-                    Avsnitt = item.Title.Text,
-                    Kategori = valdKategori
-
-                };
-
-                poddRepository.LäggTillPodd(enPodd); //Sparar podden
-                System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Avsnitt.ToString());
+                enPodd.Avsnitt.Add(item.Title.Text); // Lägg till avsnittet i listan
+                System.Diagnostics.Debug.WriteLine("Avsnitt tillagt: " + item.Title.Text);
             }
+
+            poddRepository.LäggTillPodd(enPodd); //Sparar podden med alla avsnitt
+            System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Namn);
         }
+
 
         //Metod för att ändra namnet på en podd.
         public void AndraPodd(string gammaltNamn, string nyttNamn, string nyKategori)
