@@ -34,7 +34,7 @@ namespace BLL
 
         // Hämtar poddar från ett RSS-flöde
 
-        //Skriv en metod för att bara hämta ut namnet
+        //Skriv en metod för att bara hämta ut namnet 
         public void HämtaPoddarRSS(string rssLank, string valfrittNamn= null, string valdKategori = null)
         {
            // Kontrollera om podden med samma RSS-länk redan finns
