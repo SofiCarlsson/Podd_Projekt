@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using DAL;
-
-using Models;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using DEL;
 
 namespace DEL.Repository
 {
@@ -26,6 +21,11 @@ namespace DEL.Repository
         public List<Kategori> GetAll()
         {
             return listAvKategori;
+        }
+
+        public async Task<List<Kategori>> GetAllAsync()
+        {
+            return await Task.Run(() => listAvKategori);
         }
 
         public Kategori GetById(int id)

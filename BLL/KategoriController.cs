@@ -2,6 +2,7 @@
 using Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL
 {
@@ -14,23 +15,20 @@ namespace BLL
             kategoriRepository = new KategoriRepository();
         }
 
-
-        //Metod för att skapa en ny kategori.
+        // Metod för att skapa en ny kategori.
         public void CreateKategori(int id, string namn)
         {
             Kategori kategoriObj = new Kategori(id, namn);
             kategoriRepository.Insert(kategoriObj);
         }
 
-
-        //Lista alla kategorier i en Lista.
-        public List<Kategori> RetrieveAllKategorier()
+        // Asynkron metod för att lista alla kategorier
+        public async Task<List<Kategori>> RetrieveAllKategorierAsync()
         {
-            return kategoriRepository.GetAll();
+            return await kategoriRepository.GetAllAsync();
         }
 
-
-        //Metod för att uppdatera kategorinamnet till ett nytt namn.
+        // Metod för att uppdatera kategorinamnet till ett nytt namn.
         public void UpdateCategory(int id, string newName)
         {
             var category = kategoriRepository.GetAll().FirstOrDefault(k => k.Id == id);
@@ -43,7 +41,6 @@ namespace BLL
             category.Namn = newName;
             kategoriRepository.Update(category);
         }
-
 
         // Metod för att ta bort kategori med bekräftelse
         public void DeleteKategori(int id)
@@ -61,10 +58,8 @@ namespace BLL
                 .Where(k => k.Namn.Contains(searchKeyword, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
-
-
     }
 }
-    
+
 
 

@@ -10,6 +10,7 @@ namespace DEL.Repository
     public interface IRepository<T>
     {
         List<T> GetAll();
+        Task<List<T>> GetAllAsync();
         T GetById(int Id);
         void Insert(T theObject);
         void Update(Kategori theNewObject);
