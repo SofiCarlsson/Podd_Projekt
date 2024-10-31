@@ -2,26 +2,21 @@
 {
     public class Podd
     {
-      
-        public string Avsnitt { get; set; }
-
         public string Namn { get; set; }
         public string RSSLank { get; set; }
+        public List<string> Avsnitt { get; set; } // Ändra till lista
         public string Kategori { get; set; }
-
 
         public Podd()
         {
-
+            Avsnitt = new List<string>(); // Initiera listan i konstruktorn
         }
 
-        public Podd(string avsnitt, string namn, string rsslank, string kategori)
+        public override string ToString()
         {
-           Avsnitt = avsnitt;
-            Namn = namn;
-            RSSLank = rsslank;
-            Kategori = kategori;
+            return Namn; // Returnera namnet istället för hela objektet
         }
-
     }
+
+
 }

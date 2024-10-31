@@ -81,6 +81,7 @@
             lbxMinaPoddar.Name = "lbxMinaPoddar";
             lbxMinaPoddar.Size = new Size(350, 388);
             lbxMinaPoddar.TabIndex = 2;
+            lbxMinaPoddar.SelectedIndexChanged += lbxMinaPoddar_SelectedIndexChanged;
             // 
             // txtbRSS
             // 
@@ -108,6 +109,7 @@
             lbxAvsnitt.Name = "lbxAvsnitt";
             lbxAvsnitt.Size = new Size(350, 388);
             lbxAvsnitt.TabIndex = 5;
+            lbxAvsnitt.SelectedIndexChanged += lbxAvsnitt_SelectedIndexChanged;
             // 
             // lbxInfo
             // 
