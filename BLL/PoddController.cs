@@ -20,6 +20,12 @@ namespace BLL
             return poddRepository.HämtaAllaPoddar();
         }
 
+        public List<Podd> HämtaAllaPoddar(string kategori)
+        {
+            return HämtaAllaPoddar().Where(p => p.Kategori == kategori).ToList();
+        }
+
+
         // Metod för att ändrar poddens namn
         public void AndraPoddNamn(string rssLank, string nyttNamn)
         {
