@@ -45,6 +45,8 @@ namespace BLL
         }
 
 
+
+
         // Metod för att ta bort kategori med bekräftelse
         public void DeleteKategori(int id)
         {

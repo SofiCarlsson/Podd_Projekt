@@ -94,12 +94,11 @@ namespace PoddarGrupp20
 
         private void btnLaggTillKategori_Click(object sender, EventArgs e)
         {
-            // Validera kategorinamnet
             string valideringsMeddelande = validering.ValideraOchLaggTillKategori(tbxKategori.Text);
             if (!string.IsNullOrEmpty(valideringsMeddelande))
             {
                 MessageBox.Show(valideringsMeddelande, "Valideringsfel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; // Avbryt om valideringen misslyckas
+                return;
             }
 
             try
@@ -107,14 +106,15 @@ namespace PoddarGrupp20
                 int nyttId = kategoriController.RetrieveAllKategorier().Count + 1;
                 kategoriController.CreateKategori(nyttId, tbxKategori.Text);
                 tbxKategori.Clear();
-                UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
-                UpdateComboBox();
+                UppdateraKategoriListbox();  // Uppdaterar lbxKategori
+                UpdateComboBox();  // Uppdaterar ComboBox
             }
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
 
 
         private void lbxKategori_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -278,6 +278,17 @@ namespace PoddarGrupp20
                 VisaAvsnitt(valdPodd); // Visa avsnitt för vald podd
             }
         }
+
+        private void UppdateraKategoriListbox()
+        {
+            lbxKategori.Items.Clear();
+            var kategorier = kategoriController.RetrieveAllKategorier();
+            foreach (var kategori in kategorier)
+            {
+                lbxKategori.Items.Add(kategori);
+            }
+        }
+
 
         private void lbxAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
         {
