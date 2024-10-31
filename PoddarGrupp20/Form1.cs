@@ -99,11 +99,17 @@ namespace PoddarGrupp20
 
         private void btnLaggTillKategori_Click(object sender, EventArgs e)
         {
+            // Validera kategorinamnet
+            string valideringsMeddelande = validering.ValideraOchLaggTillKategori(tbxKategori.Text);
+            if (!string.IsNullOrEmpty(valideringsMeddelande))
+            {
+                MessageBox.Show(valideringsMeddelande, "Valideringsfel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Avbryt om valideringen misslyckas
+            }
+
             try
             {
-                // Exempel på automatisk ID-tilldelning
-                int nyttId = kategoriController.RetrieveAllKategorier().Count + 1; // Ger ett nytt ID baserat på antal kategorier
-
+                int nyttId = kategoriController.RetrieveAllKategorier().Count + 1;
                 kategoriController.CreateKategori(nyttId, tbxKategori.Text);
                 tbxKategori.Clear();
                 UppdateraListbox();
