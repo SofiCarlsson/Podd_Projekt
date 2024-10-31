@@ -319,10 +319,6 @@ namespace PoddarGrupp20
                 if (valdPodd != null && valdPodd.Avsnitt.Contains(valtAvsnittNamn))
                 {
                     lbxInfo.Items.Clear();
-                    lbxInfo.Items.Add("Avsnitt: " + valtAvsnittNamn);
-                    lbxInfo.Items.Add("Kategori: " + valdPodd.Kategori);
-                    lbxInfo.Items.Add("RSS Länk: " + valdPodd.RSSLank);
-
                     // Lägg till avsnittsbeskrivningen
                     string beskrivning = valdPodd.AvsnittBeskrivningar.ContainsKey(valtAvsnittNamn)
                         ? valdPodd.AvsnittBeskrivningar[valtAvsnittNamn]
