@@ -1,49 +1,53 @@
 ﻿using Models;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using DEL;
 using DAL;
 
 namespace DEL.Repository
 {
     public class KategoriRepository : IRepository<Kategori>
     {
-        private const string filePath = "kategorier.xml";  // Fil för att spara kategorier
-        private Serializer<Kategori> KategoriSerializer;
-        private List<Kategori> ListAvKategori;
+        private const string filePath = "kategorier.xml";
+        private Serializer<Kategori> kategoriSerializer;
+        private List<Kategori> listAvKategori;
 
         public KategoriRepository()
         {
-            KategoriSerializer = new Serializer<Kategori>(filePath);
-            // Försök att ladda kategorier från fil, annars skapa en tom lista
-            ListAvKategori = LoadFromFile();
+            kategoriSerializer = new Serializer<Kategori>(filePath);
+            listAvKategori = LoadFromFile();
         }
 
-        // Hämtar alla kategorier
-        public List<Kategori> GetAll() 
+        public List<Kategori> GetAll()
         {
-            return ListAvKategori;
+            return listAvKategori;
         }
 
-        // Hämtar kategori via ID
-        public Kategori GetById(string id)
+        public Kategori GetById(int id)  // ID är nu int
         {
-            return ListAvKategori.Find(k => k.Id.Equals(id));
+            return listAvKategori.FirstOrDefault(k => k.Id == id);
         }
 
-        // Lägger till en kategori och sparar listan
         public void Insert(Kategori theObject)
         {
-            ListAvKategori.Add(theObject);
-            SaveChanges();
+            if (!listAvKategori.Any(k => k.Id == theObject.Id))  // Kontrollera att int-ID inte redan finns
+            {
+                listAvKategori.Add(theObject);
+                SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Category already exists.");
+            }
         }
 
-        // Uppdaterar en kategori och sparar listan
         public void Update(Kategori theNewObject)
         {
-            var index = ListAvKategori.FindIndex(k => k.Id == theNewObject.Id);
+            var index = listAvKategori.FindIndex(k => k.Id == theNewObject.Id);
             if (index != -1)
             {
-                ListAvKategori[index] = theNewObject;
+                listAvKategori[index] = theNewObject;
                 SaveChanges();
             }
             else
@@ -52,34 +56,31 @@ namespace DEL.Repository
             }
         }
 
-
-        // Tar bort en kategori och sparar listan
-        public void Delete(int id)
+        public void Delete(int id) // ID är nu int
         {
-            var kategori = GetAll().FirstOrDefault(k => k.Id == id);
+            var kategori = listAvKategori.FirstOrDefault(k => k.Id == id);
             if (kategori != null)
             {
-                GetAll().Remove(kategori);
+                listAvKategori.Remove(kategori);
                 SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Category not found.");
             }
         }
 
-
-        // Sparar kategorierna till en fil genom att serialisera dem
         public void SaveChanges()
         {
-            KategoriSerializer.Serialize(ListAvKategori);
+            kategoriSerializer.Serialize(listAvKategori);
         }
 
-        // Laddar kategorier från filen
         private List<Kategori> LoadFromFile()
         {
-            // Om filen inte existerar, returnera en tom lista
             if (!File.Exists(filePath))
                 return new List<Kategori>();
 
-            // Deserialisera och returnera kategorierna
-            return KategoriSerializer.Deserialize();
+            return kategoriSerializer.Deserialize();
         }
     }
 }

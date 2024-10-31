@@ -7,33 +7,27 @@ namespace BLL
 {
     public class KategoriController
     {
-        IRepository<Kategori> kategoriRepository;
+        private IRepository<Kategori> kategoriRepository;
 
         public KategoriController()
         {
             kategoriRepository = new KategoriRepository();
         }
 
-
-        //Metod för att skapa en ny kategori.
-        public void CreateKategori(int id, string namn)
+        public void CreateKategori(int id, string namn)  // Nu int id
         {
             Kategori kategoriObj = new Kategori(id, namn);
             kategoriRepository.Insert(kategoriObj);
         }
 
-
-        //Lista alla kategorier i en Lista.
         public List<Kategori> RetrieveAllKategorier()
         {
             return kategoriRepository.GetAll();
         }
 
-
-        //Metod för att uppdatera kategorinamnet till ett nytt namn.
         public void UpdateCategory(int id, string newName)
         {
-            var category = kategoriRepository.GetAll().FirstOrDefault(k => k.Id == id);
+            var category = kategoriRepository.GetById(id); // Inga konverteringar behövs
 
             if (category == null)
             {
@@ -44,19 +38,22 @@ namespace BLL
             kategoriRepository.Update(category);
         }
 
-
-        // Metod för att ta bort kategori med bekräftelse
-        public void DeleteKategori(int id)
+        public void DeleteKategori(int id) // Int ID hanteras direkt
         {
-            var kategori = kategoriRepository.GetAll().FirstOrDefault(k => k.Id == id);
+            var kategori = kategoriRepository.GetById(id);
             if (kategori != null)
             {
-                kategoriRepository.Delete(id); // Använd kategori-id för att radera
+                kategoriRepository.Delete(id);  // Använd kategori-ID direkt
+            }
+            else
+            {
+                throw new ArgumentException("Category not found.");
             }
         }
-
     }
 }
-    
+
+
+
 
 
