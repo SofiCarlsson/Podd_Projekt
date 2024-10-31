@@ -55,6 +55,14 @@ namespace BLL
             }
         }
 
+        public List<Kategori> FilterKategorier(string searchKeyword)
+        {
+            return kategoriRepository.GetAll()
+                .Where(k => k.Namn.Contains(searchKeyword, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+
     }
 }
     
