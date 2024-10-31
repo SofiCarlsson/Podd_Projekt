@@ -49,6 +49,15 @@ namespace PoddarGrupp20
             string poddNamn = txbNamn.Text;
             string valdKategori = cbxKategori.SelectedItem?.ToString();
 
+            // Kontrollera att RSS-länken inte är tom
+            string valideringsMeddelande = validering.NotEmpty(rss);
+            if (!string.IsNullOrEmpty(valideringsMeddelande))
+            {
+                MessageBox.Show(valideringsMeddelande, "Valideringsfel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Avbryt om valideringen misslyckas
+            }
+
+            // Anropa HämtaPoddarRSS om valideringen lyckades
             poddkontroll.HämtaPoddarRSS(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn, valdKategori);
 
             // Uppdatera ListBox med poddar
