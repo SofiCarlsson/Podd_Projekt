@@ -1,6 +1,8 @@
 using BLL;
 using Models;
 using System.Globalization;
+using System.Text.RegularExpressions;
+
 
 namespace PoddarGrupp20
 {
@@ -319,12 +321,15 @@ namespace PoddarGrupp20
 
                 if (valdPodd != null && valdPodd.Avsnitt.Contains(valtAvsnittNamn))
                 {
-                    tbxInfo.Clear();
-                    // Lägg till avsnittsbeskrivningen
+                    // Lägg till avsnittsbeskrivningen och ta bort HTML-taggar
                     string beskrivning = valdPodd.AvsnittBeskrivningar.ContainsKey(valtAvsnittNamn)
                         ? valdPodd.AvsnittBeskrivningar[valtAvsnittNamn]
                         : "Ingen beskrivning tillgänglig";
-                    tbxInfo.Text = "Beskrivning: " + beskrivning;
+
+                    // Ta bort HTML-taggar med regex
+                    string renBeskrivning = Regex.Replace(beskrivning, "<.*?>", string.Empty);
+
+                    tbxInfo.Text = "Beskrivning: " + renBeskrivning;
                 }
             }
         }
