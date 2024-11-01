@@ -95,16 +95,19 @@ namespace DEL.Repository
                 return new List<Kategori>();
             }
 
-            try
+            else
             {
-                var loadedList = kategoriSerializer.Deserialize();
-                System.Diagnostics.Debug.WriteLine("Load successful. Items loaded: " + loadedList.Count);
-                return loadedList;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Error loading file: " + ex.Message);
-                return new List<Kategori>();
+                try
+                {
+                    var loadedList = kategoriSerializer.Deserialize();
+                    System.Diagnostics.Debug.WriteLine("Load successful. Items loaded: " + loadedList.Count);
+                    return loadedList;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error loading file: " + ex.Message);
+                    return new List<Kategori>();
+                }
             }
         }
     }

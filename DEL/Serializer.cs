@@ -9,16 +9,10 @@ namespace DAL
     public class Serializer<T>
     {
         private string fileName;
-        public string FileName
-        {
-            set
-            {
-                fileName = value;
-            }
-        }
+        
         public Serializer(string fName)
         {
-            FileName = fName + ".xml";
+            fileName = fName;
         }
         public void Serialize(List<T> list)
         {
@@ -32,7 +26,7 @@ namespace DAL
 
         public List<T> Deserialize()
         {
-            List<T> listan;
+            List<T> listan = new List<T>();
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
             using (FileStream xmlIn =
                 new FileStream(fileName, FileMode.Open, FileAccess.Read))

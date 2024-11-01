@@ -14,6 +14,7 @@ namespace PoddarGrupp20
         private Validering validering = new Validering(); // Skapa en instans av Validering
 
 
+
         public Form1()
         {
             InitializeComponent();
@@ -21,6 +22,7 @@ namespace PoddarGrupp20
             kategoriController = new KategoriController();
             UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar()); // Skicka in alla poddar
             this.Load += new EventHandler(Form1_Load);
+            UppdateraKategoriListbox();
         }
 
         private void UppdateraPoddarListbox(List<Podd> poddar)
