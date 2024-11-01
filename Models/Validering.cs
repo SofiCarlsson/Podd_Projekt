@@ -13,23 +13,21 @@ namespace Models
         // Privat lista över befintliga kategorinamn
         private List<string> kategorier = new List<string>();
 
-        // Metod för att kontrollera att en sträng inte är tom eller bara innehåller vita tecken
         public string NotEmpty(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                return "Fältet får inte vara tomt."; // Validering misslyckades, returnera felmeddelande
+                return "Fältet får inte vara tomt."; 
             }
-            return string.Empty; // Ingen felmeddelande, validering lyckades
+            return string.Empty; 
         }
 
-        // Metod för att verifiera att RSS-länken är giltig
         public string VerifieraRSSLank(string rssLank)
         {
             string emptyCheck = NotEmpty(rssLank);
             if (!string.IsNullOrEmpty(emptyCheck))
             {
-                return emptyCheck; // Returnera felmeddelande om länken är tom
+                return emptyCheck; 
             }
 
             if (!Uri.IsWellFormedUriString(rssLank, UriKind.Absolute))
@@ -41,7 +39,7 @@ namespace Models
             {
                 using (XmlReader.Create(rssLank))
                 {
-                    return string.Empty; // Länken är giltig
+                    return string.Empty; 
                 }
             }
             catch (Exception)

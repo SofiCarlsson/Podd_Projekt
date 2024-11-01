@@ -21,7 +21,7 @@ namespace DEL.Repository
 
         public List<Kategori> GetAll()
         {
-            return listAvKategori; //Hämtar alla kategorier i listan
+            return listAvKategori;
         }
 
         public Kategori GetById(int id)
@@ -34,7 +34,7 @@ namespace DEL.Repository
             if (!listAvKategori.Any(k => k.Id == theObject.Id))
             {
                 listAvKategori.Add(theObject);
-                SaveChanges(); // Spara ändringar direkt
+                SaveChanges(); 
             }
             else
             {

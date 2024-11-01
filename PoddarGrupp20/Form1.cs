@@ -13,15 +13,15 @@ namespace PoddarGrupp20
     {
         private PoddController poddkontroll;
         private KategoriController kategoriController;
-        private int? valdKategoriId = null; // Håller koll på vald kategori
-        private Validering validering = new Validering(); // Skapa en instans av Validering
+        private int? valdKategoriId = null; 
+        private Validering validering = new Validering(); 
 
         public Form1()
         {
             InitializeComponent();
             poddkontroll = new PoddController();
             kategoriController = new KategoriController();
-            UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar()); // Skicka in alla poddar
+            UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
             this.Load += new EventHandler(Form1_Load);
             UppdateraKategoriListbox();
             UppdateraPoddarListbox();
@@ -29,22 +29,22 @@ namespace PoddarGrupp20
 
         private void UppdateraPoddarListbox(List<Podd> poddar)
         {
-            lbxMinaPoddar.Items.Clear(); // Töm listboxen först
+            lbxMinaPoddar.Items.Clear();
 
-            foreach (var podd in poddar) // Hämta alla poddar
+            foreach (var podd in poddar) 
             {
-                lbxMinaPoddar.Items.Add(podd); // Lägg till hela poddobjektet
+                lbxMinaPoddar.Items.Add(podd); 
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            UpdateComboBox(); // Fyll ComboBox initialt
+            UpdateComboBox(); 
         }
 
         private void UpdateComboBox()
         {
-            cbxKategori.Items.Clear(); // Rensa befintliga element
+            cbxKategori.Items.Clear(); 
             foreach (var item in lbxKategori.Items)
             {
                 cbxKategori.Items.Add(item);
@@ -57,25 +57,22 @@ namespace PoddarGrupp20
             string poddNamn = txbNamn.Text;
             string valdKategori = cbxKategori.SelectedItem?.ToString();
 
-            // Kontrollera att RSS-länken inte är tom
             string valideringsMeddelande = validering.NotEmpty(rss);
             if (!string.IsNullOrEmpty(valideringsMeddelande))
             {
+                // Avbryt om valideringen misslyckas och skickar ett meddelande
                 MessageBox.Show(valideringsMeddelande, "Valideringsfel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; // Avbryt om valideringen misslyckas
+                return; 
             }
 
-            // Anropa den asynkrona metoden för att hämta poddar
             await poddkontroll.HämtaPoddarRSSAsync(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn, valdKategori);
 
-            // Uppdatera ListBox med poddar
             UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
         }
 
-        // Metoden för att uppdatera ListBox med poddar
         private void UppdateraAvsnittListbox(Podd valdPodd)
         {
-            lbxAvsnitt.Items.Clear(); // Töm listboxen först
+            lbxAvsnitt.Items.Clear(); 
             foreach (var avsnitt in valdPodd.AvsnittLista)
             {
                 lbxAvsnitt.Items.Add(avsnitt.Namn);
@@ -84,22 +81,23 @@ namespace PoddarGrupp20
             // Välj automatiskt första avsnittet om det finns några avsnitt
             if (lbxAvsnitt.Items.Count > 0)
             {
-                lbxAvsnitt.SelectedIndex = 0; // Detta triggar SelectedIndexChanged och visar beskrivningen
+                // Detta triggar SelectedIndexChanged
+                lbxAvsnitt.SelectedIndex = 0; 
             }
             else
             {
-                // Om inga avsnitt finns, rensa beskrivningen
+                // Om ingen avsnittsbeskrivning finns ska detta skrivas ut istället
                 tbxInfo.Text = "Ingen avsnittsbeskrivning tillgänglig.";
             }
         }
 
         private void UppdateraPoddarListbox()
         {
-            lbxMinaPoddar.Items.Clear(); // Töm listboxen först
+            lbxMinaPoddar.Items.Clear(); 
 
-            foreach (var podd in poddkontroll.HämtaAllaPoddar()) // Hämta alla poddar
+            foreach (var podd in poddkontroll.HämtaAllaPoddar()) 
             {
-                lbxMinaPoddar.Items.Add(podd); // Lägg till hela poddobjektet
+                lbxMinaPoddar.Items.Add(podd); 
             }
         }
 
@@ -122,8 +120,8 @@ namespace PoddarGrupp20
                 int nyttId = kategoriController.RetrieveAllKategorier().Count + 1;
                 kategoriController.CreateKategori(nyttId, tbxKategori.Text);
                 tbxKategori.Clear();
-                UppdateraKategoriListbox();  // Uppdaterar lbxKategori
-                UpdateComboBox();  // Uppdaterar ComboBox
+                UppdateraKategoriListbox();  
+                UpdateComboBox();  
             }
             catch (ArgumentException ex)
             {
@@ -152,21 +150,19 @@ namespace PoddarGrupp20
             {
                 Validering validering = new Validering();
 
-                // Anropa NotEmpty för att validera inputen
                 string errorMessage = validering.NotEmpty(tbxKategori.Text);
 
-                // Kolla om det finns ett felmeddelande
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     MessageBox.Show(errorMessage);
-                    return; // Avbryt om valideringen misslyckas
+                    return; 
                 }
 
                 try
                 {
                     kategoriController.UpdateCategory(valdKategoriId.Value, tbxKategori.Text);
                     tbxKategori.Clear();
-                    valdKategoriId = null; // Nollställ vald kategori efter uppdatering
+                    valdKategoriId = null; 
                     UppdateraKategoriListbox();
                     UpdateComboBox();
                 }
@@ -194,10 +190,9 @@ namespace PoddarGrupp20
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     MessageBox.Show(errorMessage);
-                    return; // Avbryt om valideringen misslyckas
+                    return; 
                 }
 
-                // Visa en bekräftelsedialog
                 var result = MessageBox.Show(
                     $"Är du säker på att du vill ta bort kategorin '{kategoriNamn}'?",
                     "Bekräfta borttagning",
@@ -205,16 +200,14 @@ namespace PoddarGrupp20
                     MessageBoxIcon.Warning
                 );
 
-                // Kontrollera om användaren klickade på "Ja"
                 if (result == DialogResult.Yes)
                 {
                     try
                     {
-                        kategoriController.DeleteKategori(valdKategoriId.Value); // Ta bort kategorin
-                        tbxKategori.Clear(); // Rensa textbox
-                        valdKategoriId = null; // Återställ vald kategori
+                        kategoriController.DeleteKategori(valdKategoriId.Value); 
+                        tbxKategori.Clear(); 
+                        valdKategoriId = null; 
 
-                        // Uppdatera listor och combobox
                         UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
                         UppdateraKategoriListbox();
                         UpdateComboBox();
@@ -237,20 +230,16 @@ namespace PoddarGrupp20
             {
                 string valtPoddNamn = lbxMinaPoddar.SelectedItem.ToString();
                 string nyttNamn = txbNamn.Text;
-                string nyKategori = cbxKategori.SelectedItem?.ToString(); // Ny kategori
+                string nyKategori = cbxKategori.SelectedItem?.ToString();
 
-                // Skapa en instans av Validering
                 Validering validering = new Validering();
 
-                // Anropa NotEmpty och spara resultatet
                 string errorMessage = validering.NotEmpty(nyttNamn);
 
-                // Kolla om det finns ett felmeddelande
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
-                    // Visa felmeddelandet
                     MessageBox.Show(errorMessage);
-                    return; // Avbryt om valideringen misslyckas
+                    return; 
                 }
 
                 poddkontroll.AndraPodd(valtPoddNamn, nyttNamn, nyKategori);
@@ -291,8 +280,8 @@ namespace PoddarGrupp20
             if (lbxMinaPoddar.SelectedItem != null)
             {
                 var valdPodd = (Podd)lbxMinaPoddar.SelectedItem;
-                txbNamn.Text = valdPodd.Namn; // Visa vald podds namn i textbox
-                UppdateraAvsnittListbox(valdPodd); // Hämta avsnitt från vald podd
+                txbNamn.Text = valdPodd.Namn; 
+                UppdateraAvsnittListbox(valdPodd); 
             }
         }
 
@@ -311,7 +300,7 @@ namespace PoddarGrupp20
 
                 if (valtAvsnitt != null)
                 {
-                    tbxInfo.Text = renBeskrivning; // Visa avsnittets beskrivning
+                    tbxInfo.Text = renBeskrivning; 
                 }
                 else
                 {
@@ -328,11 +317,11 @@ namespace PoddarGrupp20
             if (!string.IsNullOrEmpty(valdKategori))
             {
                 var filtreradePoddar = allaPoddar.Where(p => p.Kategori == valdKategori).ToList();
-                UppdateraPoddarListbox(filtreradePoddar); // Uppdatera listbox med filtrerade poddar
+                UppdateraPoddarListbox(filtreradePoddar); 
             }
             else
             {
-                UppdateraPoddarListbox(allaPoddar); // Visa alla poddar om ingen kategori är vald
+                UppdateraPoddarListbox(allaPoddar); 
             }
         }
     }

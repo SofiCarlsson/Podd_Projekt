@@ -17,31 +17,26 @@ namespace BLL
             poddRepository = new PodcastRepository();
         }
 
-        // Hämtar alla poddar
         public List<Podd> HämtaAllaPoddar()
         {
             return poddRepository.HämtaAllaPoddar();
         }
 
-        // Hämtar poddar baserat på kategori
         public List<Podd> HämtaAllaPoddar(string kategori)
         {
             return HämtaAllaPoddar().Where(p => p.Kategori == kategori).ToList();
         }
 
-        // Ändrar namnet på en podd
         public void AndraPoddNamn(string rssLank, string nyttNamn)
         {
             poddRepository.AndraPoddNamn(rssLank, nyttNamn);
         }
 
-        // Tar bort en podd
         public void TaBortPodd(string rssLank)
         {
             poddRepository.TaBortPodd(rssLank);
         }
 
-        // Hämtar poddar från ett RSS-flöde
         public async Task HämtaPoddarRSSAsync(string rssLank, string valfrittNamn = null, string valdKategori = null)
         {
             // Kontrollera om podden med samma RSS-länk redan finns
@@ -78,20 +73,18 @@ namespace BLL
             }
         }
 
-        // Ändrar namnet och kategorin på en podd
         public void AndraPodd(string gammaltNamn, string nyttNamn, string nyKategori)
         {
             var podd = poddRepository.HämtaAllaPoddar().FirstOrDefault(p => p.Namn == gammaltNamn);
             if (podd != null)
             {
                 podd.Namn = nyttNamn;
-                podd.Kategori = nyKategori; // Uppdatera kategori
+                podd.Kategori = nyKategori;
                 System.Diagnostics.Debug.WriteLine("Podd uppdaterad: " + podd.Namn);
-                poddRepository.SaveChanges(); // Spara ändringarna
+                poddRepository.SaveChanges();
             }
         }
 
-        // Uppdaterar en podd
         public void UppdateraPodd(Podd uppdateradPodd)
         {
             var befintligPodd = poddRepository.HämtaAllaPoddar().FirstOrDefault(p => p.RSSLank == uppdateradPodd.RSSLank);
@@ -99,10 +92,8 @@ namespace BLL
             {
                 befintligPodd.Namn = uppdateradPodd.Namn;
                 befintligPodd.Kategori = uppdateradPodd.Kategori;
-                // Här kan du även uppdatera avsnitten om det behövs
-                poddRepository.SaveChanges(); // Spara ändringarna
+                poddRepository.SaveChanges(); 
             }
         }
     }
 }
-

@@ -5,18 +5,18 @@
         public string Namn { get; set; }
         public string Id { get; set; }
         public string RSSLank { get; set; }
-        public List<Avsnitt> AvsnittLista { get; set; } // Listan över avsnitt
+        public List<Avsnitt> AvsnittLista { get; set; } 
         public string Kategori { get; set; }
 
         public Podd(string rss)
         {
-            AvsnittLista = new List<Avsnitt>(); // Initiera listan i konstruktorn
+            AvsnittLista = new List<Avsnitt>(); 
             RSSLank = rss;
         }
 
         public Podd()
         {
-            AvsnittLista = new List<Avsnitt>(); // Initiera listan även i den tomma konstruktorn
+            AvsnittLista = new List<Avsnitt>(); 
         }
 
         public void LäggaTillAvsnitt(string namn, string beskrivning)
@@ -37,8 +37,7 @@
 
         public override string ToString()
         {
-            return Namn; // Returnera namnet istället för hela objektet
+            return Namn;
         }
     }
 }
-

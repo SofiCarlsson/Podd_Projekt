@@ -8,14 +8,14 @@ namespace DEL.Repository
 {
     public class PodcastRepository
     {
-        private const string filePath = "poddar.xml"; // Filväg för podcasts
+        private const string filePath = "poddar.xml"; 
         private readonly Serializer<Podd> poddSerializer;
         private List<Podd> poddLista;
 
         public PodcastRepository()
         {
             poddSerializer = new Serializer<Podd>(filePath);
-            poddLista = LoadFromFile(); // Ladda poddar från XML-fil vid uppstart
+            poddLista = LoadFromFile(); 
         }
 
         // Lägger till en podd om den inte redan finns
@@ -24,57 +24,51 @@ namespace DEL.Repository
             if (!poddLista.Any(p => p.RSSLank == podden.RSSLank))
             {
                 poddLista.Add(podden);
-                SaveChanges(); // Spara ändringen till fil
+                SaveChanges();
             }
         }
 
-        // Hämtar alla poddar
         public List<Podd> HämtaAllaPoddar()
         {
             return poddLista;
         }
 
-        // Ändrar namnet på en podd
         public void AndraPoddNamn(string rssLank, string nyttNamn)
         {
             var podd = poddLista.FirstOrDefault(p => p.RSSLank == rssLank);
             if (podd != null)
             {
                 podd.Namn = nyttNamn;
-                SaveChanges(); // Spara ändringen till fil
+                SaveChanges();
             }
         }
 
-        // Tar bort en podd
         public void TaBortPodd(string rssLank)
         {
             var podd = poddLista.FirstOrDefault(p => p.RSSLank == rssLank);
             if (podd != null)
             {
                 poddLista.Remove(podd);
-                SaveChanges(); // Spara ändringen till fil
+                SaveChanges(); 
             }
         }
 
-        // Lägger till avsnitt till en podd
         public void LäggTillAvsnitt(string rssLank, string avsnittNamn, string avsnittBeskrivning)
         {
             var podd = poddLista.FirstOrDefault(p => p.RSSLank == rssLank);
             if (podd != null)
             {
                 podd.LäggaTillAvsnitt(avsnittNamn, avsnittBeskrivning);
-                SaveChanges(); // Spara ändringen till fil
+                SaveChanges(); 
             }
         }
 
-        // Hämtar alla avsnitt för en given podd
         public List<Avsnitt> HämtaAvsnittFörPodd(string rssLank)
         {
             var podd = poddLista.FirstOrDefault(p => p.RSSLank == rssLank);
-            return podd?.AvsnittLista; // Returnera listan av avsnitt eller null
+            return podd?.AvsnittLista; 
         }
 
-        // Spara ändringar till fil
         public void SaveChanges()
         {
             try
@@ -107,10 +101,9 @@ namespace DEL.Repository
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine("Error loading podcasts: " + ex.Message);
-                    return new List<Podd>(); // Returnera en tom lista om läsningen misslyckas
+                    return new List<Podd>(); 
                 }
             }
         }
     }
 }
-
