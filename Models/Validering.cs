@@ -49,26 +49,5 @@ namespace Models
                 return "RSS-länken är inte giltig: kunde inte läsa in flödet.";
             }
         }
-
-        // Ny metod för att validera och lägga till en kategori
-        public string ValideraOchLaggTillKategori(string kategoriNamn)
-        {
-            // Kontrollera att kategorinamnet inte är tomt
-            string emptyCheck = NotEmpty(kategoriNamn);
-            if (!string.IsNullOrEmpty(emptyCheck))
-            {
-                return emptyCheck; // Returnera felmeddelande om kategorinamnet är tomt
-            }
-
-            // Kontrollera att kategorinamnet är unikt (case-insensitive)
-            if (kategorier.Any(k => k.Equals(kategoriNamn, StringComparison.OrdinalIgnoreCase)))
-            {
-                return $"Kategorin '{kategoriNamn}' finns redan."; // Returnera felmeddelande om kategorin redan existerar
-            }
-
-            // Om namnet är giltigt och unikt, lägg till det i listan
-            kategorier.Add(kategoriNamn);
-            return string.Empty; // Inget felmeddelande, validering lyckades
-        }
     }
 }

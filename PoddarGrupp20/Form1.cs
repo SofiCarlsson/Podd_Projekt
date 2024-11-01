@@ -115,12 +115,6 @@ namespace PoddarGrupp20
 
         private void btnLaggTillKategori_Click(object sender, EventArgs e)
         {
-            string valideringsMeddelande = validering.ValideraOchLaggTillKategori(tbxKategori.Text);
-            if (!string.IsNullOrEmpty(valideringsMeddelande))
-            {
-                MessageBox.Show(valideringsMeddelande, "Valideringsfel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
 
             try
