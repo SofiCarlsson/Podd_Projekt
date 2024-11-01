@@ -190,30 +190,44 @@ namespace PoddarGrupp20
         {
             if (valdKategoriId.HasValue)
             {
-                Validering validering = new Validering();
+                // Hämta namnet på den valda kategorin för att visa i bekräftelsedialogen
+                var valdKategori = (Kategori)lbxKategori.SelectedItem;
+                string kategoriNamn = valdKategori.Namn;
 
-                // Anropa NotEmpty för att validera inputen
-                string errorMessage = validering.NotEmpty(tbxKategori.Text);
-
-                // Kolla om det finns ett felmeddelande
+                // Anropa NotEmpty för att validera att det finns en kategori vald
+                string errorMessage = validering.NotEmpty(kategoriNamn);
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     MessageBox.Show(errorMessage);
                     return; // Avbryt om valideringen misslyckas
                 }
 
-                try
+                // Visa en bekräftelsedialog
+                var result = MessageBox.Show(
+                    $"Är du säker på att du vill ta bort kategorin '{kategoriNamn}'?",
+                    "Bekräfta borttagning",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                // Kontrollera om användaren klickade på "Ja"
+                if (result == DialogResult.Yes)
                 {
-                    kategoriController.DeleteKategori(valdKategoriId.Value); // Ändrat här för att ta bort kategorin
-                    tbxKategori.Clear();
-                    valdKategoriId = null; // Nollställ vald kategori efter borttagning
-                    UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
-                    UppdateraKategoriListbox(); 
-                    UpdateComboBox();
-                }
-                catch (ArgumentException ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    try
+                    {
+                        kategoriController.DeleteKategori(valdKategoriId.Value); // Ta bort kategorin
+                        tbxKategori.Clear(); // Rensa textbox
+                        valdKategoriId = null; // Återställ vald kategori
+
+                        // Uppdatera listor och combobox
+                        UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
+                        UppdateraKategoriListbox();
+                        UpdateComboBox();
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
             else
