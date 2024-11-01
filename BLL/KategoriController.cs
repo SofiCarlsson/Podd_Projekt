@@ -15,7 +15,7 @@ namespace BLL
         }
 
 
-        //Metod för att skapa en ny kategori.
+        //Metod för att skapa en ny kategori
         public void CreateKategori(int id, string namn)
         {
             Kategori kategoriObj = new Kategori(id, namn);
@@ -47,13 +47,13 @@ namespace BLL
 
 
 
-        // Metod för att ta bort kategori med bekräftelse
+        // Metod för att ta bort kategori
         public void DeleteKategori(int id)
         {
             var kategori = kategoriRepository.GetAll().FirstOrDefault(k => k.Id == id);
             if (kategori != null)
             {
-                kategoriRepository.Delete(id); // Använd kategori-id för att radera
+                kategoriRepository.Delete(id); 
             }
         }
 

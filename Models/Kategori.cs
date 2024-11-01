@@ -16,7 +16,6 @@ namespace Models
         {
         }
 
-        // Konstruktor med parametrar
         public Kategori(int id, string namn)
         {
             Id = id;
@@ -25,7 +24,7 @@ namespace Models
 
         public override string ToString()
         {
-            return Namn; // Detta gör att Namn visas i listboxen
+            return Namn;
         }
     }
 }
