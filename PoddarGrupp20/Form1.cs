@@ -208,8 +208,8 @@ namespace PoddarGrupp20
                     tbxKategori.Clear();
                     valdKategoriId = null; // Nollställ vald kategori efter borttagning
                     UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
+                    UppdateraKategoriListbox(); 
                     UpdateComboBox();
-                    UppdateraKategoriListbox(); // Lägg till detta för att uppdatera lbxKategori
                 }
                 catch (ArgumentException ex)
                 {
