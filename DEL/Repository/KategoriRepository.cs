@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using DAL;
-
-using Models;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using DEL;
 
@@ -25,12 +21,12 @@ namespace DEL.Repository
 
         public List<Kategori> GetAll()
         {
-            return listAvKategori;
+            return listAvKategori; //Hämtar alla kategorier i listan
         }
 
         public Kategori GetById(int id)
         {
-            return listAvKategori.FirstOrDefault(k => k.Id == id);
+            return listAvKategori.FirstOrDefault(k => k.Id == id); 
         }
 
         public void Insert(Kategori theObject)
