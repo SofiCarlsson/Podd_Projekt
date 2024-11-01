@@ -41,7 +41,7 @@ namespace BLL
         // Hämtar poddar från ett RSS-flöde
 
         //Skriv en metod för att bara hämta ut namnet 
-        public void HämtaPoddarRSS(string rssLank, string valfrittNamn = null, string valdKategori = null)
+        public async Task HämtaPoddarRSSAsync(string rssLank, string valfrittNamn = null, string valdKategori = null)
         {
             // Kontrollera om podden med samma RSS-länk redan finns
             List<Podd> allaPoddar = poddRepository.HämtaAllaPoddar();
@@ -58,22 +58,22 @@ namespace BLL
 
             using (XmlReader varXMLlasare = XmlReader.Create(rssLank, settings))
             {
-                SyndicationFeed poddFlode = SyndicationFeed.Load(varXMLlasare);
+                var poddFlode = await Task.Run(() => SyndicationFeed.Load(varXMLlasare));  // Asynkront laddar flödet
 
                 string poddNamn = valfrittNamn ?? poddFlode.Title.Text;
 
-                Podd enPodd = new Podd
+                var enPodd = new Podd
                 {
                     Namn = poddNamn,
                     RSSLank = rssLank,
                     Kategori = valdKategori,
-                    AvsnittBeskrivningar = new Dictionary<string, string>() // Se till att du har denna struktur i Podd
+                    AvsnittBeskrivningar = new Dictionary<string, string>()
                 };
 
-                foreach (SyndicationItem item in poddFlode.Items)
+                foreach (var item in poddFlode.Items)
                 {
-                    enPodd.Avsnitt.Add(item.Title.Text); // Lägg till avsnittet i listan
-                    enPodd.AvsnittBeskrivningar[item.Title.Text] = item.Summary?.Text ?? "Ingen beskrivning tillgänglig"; // Spara beskrivningen
+                    enPodd.Avsnitt.Add(item.Title.Text);
+                    enPodd.AvsnittBeskrivningar[item.Title.Text] = item.Summary?.Text ?? "Ingen beskrivning tillgänglig";
                     System.Diagnostics.Debug.WriteLine("Avsnitt tillagt: " + item.Title.Text);
                 }
 
@@ -81,6 +81,7 @@ namespace BLL
                 System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Namn);
             }
         }
+
 
 
 

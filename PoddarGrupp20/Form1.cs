@@ -45,7 +45,7 @@ namespace PoddarGrupp20
             }
         }
 
-        private void btnSök_Click(object sender, EventArgs e)
+        private async void btnSök_Click(object sender, EventArgs e)
         {
             string rss = txtbRSS.Text;
             string poddNamn = txbNamn.Text;
@@ -59,8 +59,8 @@ namespace PoddarGrupp20
                 return; // Avbryt om valideringen misslyckas
             }
 
-            // Anropa HämtaPoddarRSS om valideringen lyckades
-            poddkontroll.HämtaPoddarRSS(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn, valdKategori);
+            // Anropa den asynkrona metoden för att hämta poddar
+            await poddkontroll.HämtaPoddarRSSAsync(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn, valdKategori);
 
             // Uppdatera ListBox med poddar
             UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
