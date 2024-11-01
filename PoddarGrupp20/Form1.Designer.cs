@@ -34,7 +34,6 @@
             txtbRSS = new TextBox();
             lblLank = new Label();
             lbxAvsnitt = new ListBox();
-            lbxInfo = new ListBox();
             btnAndra = new Button();
             btnTabort = new Button();
             cbxKategori = new ComboBox();
@@ -51,6 +50,7 @@
             lblAvsnitt = new Label();
             lblInfo = new Label();
             btnFiltrera = new Button();
+            tbxInfo = new TextBox();
             SuspendLayout();
             // 
             // btnSök
@@ -110,15 +110,6 @@
             lbxAvsnitt.Size = new Size(350, 388);
             lbxAvsnitt.TabIndex = 5;
             lbxAvsnitt.SelectedIndexChanged += lbxAvsnitt_SelectedIndexChanged;
-            // 
-            // lbxInfo
-            // 
-            lbxInfo.FormattingEnabled = true;
-            lbxInfo.Location = new Point(819, 425);
-            lbxInfo.Margin = new Padding(4);
-            lbxInfo.Name = "lbxInfo";
-            lbxInfo.Size = new Size(350, 388);
-            lbxInfo.TabIndex = 6;
             // 
             // btnAndra
             // 
@@ -283,11 +274,21 @@
             btnFiltrera.UseVisualStyleBackColor = true;
             btnFiltrera.Click += btnFiltrera_Click;
             // 
+            // tbxInfo
+            // 
+            tbxInfo.Location = new Point(861, 425);
+            tbxInfo.Multiline = true;
+            tbxInfo.Name = "tbxInfo";
+            tbxInfo.ScrollBars = ScrollBars.Vertical;
+            tbxInfo.Size = new Size(344, 388);
+            tbxInfo.TabIndex = 25;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1820, 850);
+            Controls.Add(tbxInfo);
             Controls.Add(btnFiltrera);
             Controls.Add(lblInfo);
             Controls.Add(lblAvsnitt);
@@ -304,7 +305,6 @@
             Controls.Add(cbxKategori);
             Controls.Add(btnTabort);
             Controls.Add(btnAndra);
-            Controls.Add(lbxInfo);
             Controls.Add(lbxAvsnitt);
             Controls.Add(lblLank);
             Controls.Add(txtbRSS);
@@ -326,7 +326,6 @@
         private TextBox txtbRSS;
         private Label lblLank;
         private ListBox lbxAvsnitt;
-        private ListBox lbxInfo;
         private Button btnAndra;
         private Button btnTabort;
         private ComboBox cbxKategori;
@@ -343,5 +342,6 @@
         private Label lblAvsnitt;
         private Label lblInfo;
         private Button btnFiltrera;
+        private TextBox tbxInfo;
     }
 }

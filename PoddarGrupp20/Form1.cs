@@ -1,5 +1,6 @@
 using BLL;
 using Models;
+using System.Globalization;
 
 namespace PoddarGrupp20
 {
@@ -318,12 +319,12 @@ namespace PoddarGrupp20
 
                 if (valdPodd != null && valdPodd.Avsnitt.Contains(valtAvsnittNamn))
                 {
-                    lbxInfo.Items.Clear();
+                    tbxInfo.Clear();
                     // Lägg till avsnittsbeskrivningen
                     string beskrivning = valdPodd.AvsnittBeskrivningar.ContainsKey(valtAvsnittNamn)
                         ? valdPodd.AvsnittBeskrivningar[valtAvsnittNamn]
                         : "Ingen beskrivning tillgänglig";
-                    lbxInfo.Items.Add("Beskrivning: " + beskrivning);
+                    tbxInfo.Text = "Beskrivning: " + beskrivning;
                 }
             }
         }
