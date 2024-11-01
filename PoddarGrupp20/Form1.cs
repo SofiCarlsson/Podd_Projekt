@@ -122,6 +122,7 @@ namespace PoddarGrupp20
                 return;
             }
 
+
             try
             {
                 int nyttId = kategoriController.RetrieveAllKategorier().Count + 1;
@@ -312,9 +313,11 @@ namespace PoddarGrupp20
                 var valtAvsnittNamn = lbxAvsnitt.SelectedItem.ToString();
                 var valtAvsnitt = valdPodd.AvsnittLista.FirstOrDefault(a => a.Namn == valtAvsnittNamn);
 
+                string renBeskrivning = Regex.Replace(valtAvsnitt.AvsnittsBeskrivning, "<.*?>", string.Empty);
+
                 if (valtAvsnitt != null)
                 {
-                    tbxInfo.Text = valtAvsnitt.AvsnittsBeskrivning; // Visa avsnittets beskrivning
+                    tbxInfo.Text = renBeskrivning; // Visa avsnittets beskrivning
                 }
                 else
                 {
