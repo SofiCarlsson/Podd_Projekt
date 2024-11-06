@@ -113,7 +113,15 @@ namespace PoddarGrupp20
 
         private void btnLaggTillKategori_Click(object sender, EventArgs e)
         {
+            Validering validering = new Validering();
 
+            string errorMessage = validering.NotEmpty(tbxKategori.Text);
+
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                MessageBox.Show(errorMessage);
+                return;
+            }
 
             try
             {
