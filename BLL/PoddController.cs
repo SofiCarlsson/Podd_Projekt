@@ -23,16 +23,6 @@ namespace BLL
             return poddRepository.HämtaAllaPoddar();
         }
 
-        public List<Podd> HämtaAllaPoddar(string kategori)
-        {
-            return HämtaAllaPoddar().Where(p => p.Kategori == kategori).ToList();
-        }
-
-        public void AndraPoddNamn(string rssLank, string nyttNamn)
-        {
-            poddRepository.AndraPoddNamn(rssLank, nyttNamn);
-        }
-
         public void TaBortPodd(string rssLank)
         {
             poddRepository.TaBortPodd(rssLank);
