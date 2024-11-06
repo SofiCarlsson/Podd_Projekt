@@ -12,7 +12,7 @@ namespace DEL.Repository
         private const string filePath = "kategorier.xml";
         private Serializer<Kategori> kategoriSerializer;
         private List<Kategori> listAvKategori;
-        private Validering validering; // Skapa en instans av Validering
+        private Validering validering; 
 
         public KategoriRepository()
         {
