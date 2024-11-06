@@ -80,7 +80,7 @@ namespace BLL
                         }
 
                         poddRepository.LäggTillPodd(enPodd);
-                        return null; // Inget felmeddelande
+                        return null;
                     }
                 }
             }

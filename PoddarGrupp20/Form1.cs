@@ -283,7 +283,6 @@ namespace PoddarGrupp20
                     poddkontroll.TaBortPodd(valdPodd.RSSLank);
                     UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
 
-                    // Töm listboxen och textboxen
                     lbxAvsnitt.Items.Clear();
                     tbxInfo.Clear();
                 }
