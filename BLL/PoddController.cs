@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace BLL
 {
     public class PoddController
@@ -37,41 +38,68 @@ namespace BLL
             poddRepository.TaBortPodd(rssLank);
         }
 
-        public async Task HämtaPoddarRSSAsync(string rssLank, string valfrittNamn = null, string valdKategori = null)
+        public async Task<string> HämtaPoddarRSSAsync(string rssLank, string valfrittNamn = null, string valdKategori = null)
         {
-            // Kontrollera om podden med samma RSS-länk redan finns
             if (poddRepository.HämtaAllaPoddar().Any(p => p.RSSLank == rssLank))
             {
-                System.Diagnostics.Debug.WriteLine("Podd med denna RSS-länk finns redan: " + rssLank);
-                return;
+                return "Podd med denna RSS-länk finns redan.";
             }
 
-            var settings = new XmlReaderSettings { DtdProcessing = DtdProcessing.Parse };
-
-            using (XmlReader varXMLlasare = XmlReader.Create(rssLank, settings))
+            try
             {
-                var poddFlode = await Task.Run(() => SyndicationFeed.Load(varXMLlasare));
-
-                var poddNamn = valfrittNamn ?? poddFlode.Title.Text;
-
-                var enPodd = new Podd
+                using (var httpClient = new HttpClient())
                 {
-                    RSSLank = rssLank,
-                    Namn = poddNamn,
-                    Kategori = valdKategori
-                };
+                    var response = await httpClient.GetAsync(rssLank);
+                    response.EnsureSuccessStatusCode();
 
-                foreach (var item in poddFlode.Items)
-                {
-                    // Lägga till avsnitt med namn och beskrivning
-                    enPodd.LäggaTillAvsnitt(item.Title.Text, item.Summary?.Text ?? "Ingen beskrivning tillgänglig");
-                    System.Diagnostics.Debug.WriteLine("Avsnitt tillagt: " + item.Title.Text);
+                    var rssInnehall = await response.Content.ReadAsStringAsync();
+                    var settings = new XmlReaderSettings { DtdProcessing = DtdProcessing.Parse };
+
+                    using (var stringReader = new StringReader(rssInnehall))
+                    using (XmlReader varXMLlasare = XmlReader.Create(stringReader, settings))
+                    {
+                        var poddFlode = SyndicationFeed.Load(varXMLlasare);
+
+                        if (poddFlode == null || string.IsNullOrEmpty(poddFlode.Title?.Text))
+                        {
+                            return "Ogiltigt RSS-flöde: Saknar titel.";
+                        }
+
+                        var poddNamn = valfrittNamn ?? poddFlode.Title.Text;
+
+                        var enPodd = new Podd
+                        {
+                            RSSLank = rssLank,
+                            Namn = poddNamn,
+                            Kategori = valdKategori
+                        };
+
+                        foreach (var item in poddFlode.Items)
+                        {
+                            enPodd.LäggaTillAvsnitt(item.Title.Text, item.Summary?.Text ?? "Ingen beskrivning tillgänglig");
+                        }
+
+                        poddRepository.LäggTillPodd(enPodd);
+                        return null; // Inget felmeddelande
+                    }
                 }
-
-                poddRepository.LäggTillPodd(enPodd);
-                System.Diagnostics.Debug.WriteLine("Podd tillagd: " + enPodd.Namn);
+            }
+            catch (HttpRequestException)
+            {
+                return "Fel vid hämtning av RSS-flödet. Kontrollera att RSS-länken är giltig och tillgänglig.";
+            }
+            catch (XmlException)
+            {
+                return "Fel vid parsing av XML. Kontrollera att RSS-flödet har ett korrekt format.";
+            }
+            catch (Exception ex)
+            {
+                return "Ett oväntat fel inträffade: " + ex.Message;
             }
         }
+
+
+
 
         public void AndraPodd(string gammaltNamn, string nyttNamn, string nyKategori)
         {

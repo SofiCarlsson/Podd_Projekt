@@ -57,18 +57,29 @@ namespace PoddarGrupp20
             string poddNamn = txbNamn.Text;
             string valdKategori = cbxKategori.SelectedItem?.ToString();
 
+            // Validera att RSS-fältet inte är tomt
             string valideringsMeddelande = validering.NotEmpty(rss);
             if (!string.IsNullOrEmpty(valideringsMeddelande))
             {
-                // Avbryt om valideringen misslyckas och skickar ett meddelande
                 MessageBox.Show(valideringsMeddelande, "Valideringsfel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; 
+                return;
             }
 
-            await poddkontroll.HämtaPoddarRSSAsync(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn, valdKategori);
+            // Hämta podd från RSS-länk och få tillbaka eventuellt felmeddelande
+            string felMeddelande = await poddkontroll.HämtaPoddarRSSAsync(rss, string.IsNullOrEmpty(poddNamn) ? null : poddNamn, valdKategori);
 
-            UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
+            // Kontrollera om felmeddelande returnerades och visa det i en MessageBox
+            if (!string.IsNullOrEmpty(felMeddelande))
+            {
+                MessageBox.Show(felMeddelande, "Fel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show("Podd tillagd!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
+            }
         }
+
 
         private void UppdateraAvsnittListbox(Podd valdPodd)
         {

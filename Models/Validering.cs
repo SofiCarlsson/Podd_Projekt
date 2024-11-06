@@ -23,12 +23,14 @@ namespace Models
 
         public string VerifieraRSSLank(string rssLank)
         {
+            // Kontrollera att länken inte är tom
             string emptyCheck = NotEmpty(rssLank);
             if (!string.IsNullOrEmpty(emptyCheck))
             {
                 return emptyCheck;
             }
 
+            // Kontrollera att länken har ett korrekt format
             if (!Uri.IsWellFormedUriString(rssLank, UriKind.Absolute))
             {
                 return "RSS-länken är inte giltig: länken har ett ogiltigt format.";
@@ -36,16 +38,27 @@ namespace Models
 
             try
             {
-                using (XmlReader.Create(rssLank))
+                // Försök att skapa en XML-läsare för att verifiera att länken fungerar som ett RSS-flöde
+                using (XmlReader reader = XmlReader.Create(rssLank))
                 {
-                    return string.Empty;
+                    while (reader.Read()) { }  // Läs igenom flödet för att säkerställa att det är läsbart
+                    return string.Empty;       // Om det lyckas, är länken giltig
                 }
+            }
+            catch (XmlException)
+            {
+                return "RSS-länken är inte giltig: XML-strukturen är felaktig.";
+            }
+            catch (UriFormatException)
+            {
+                return "RSS-länken är inte giltig: ogiltigt URL-format.";
             }
             catch (Exception)
             {
                 return "RSS-länken är inte giltig: kunde inte läsa in flödet.";
             }
         }
+
 
         // Överlagrad metod för att validera unika ID:n
         public string ValideraUnikKategori(List<Kategori> kategorier, int id)
