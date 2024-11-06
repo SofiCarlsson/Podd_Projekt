@@ -256,17 +256,19 @@ namespace PoddarGrupp20
             if (lbxMinaPoddar.SelectedItem != null)
             {
                 string valtPoddNamn = lbxMinaPoddar.SelectedItem.ToString();
-
                 var valdPodd = (Podd)lbxMinaPoddar.SelectedItem;
 
-                 DialogResult result = MessageBox.Show("Vill du verkligen ta bort den valda podden?", "Bekräfta borttagning", MessageBoxButtons.YesNo);
-                    if (result == DialogResult.Yes)
-                    {
-                        poddkontroll.TaBortPodd(valdPodd.RSSLank);
-                        UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
-                    }
+                DialogResult result = MessageBox.Show("Vill du verkligen ta bort den valda podden?", "Bekräfta borttagning", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    poddkontroll.TaBortPodd(valdPodd.RSSLank);
+                    UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
+
+                    // Töm listboxen och textboxen
+                    lbxAvsnitt.Items.Clear();
+                    tbxInfo.Clear();
                 }
-            
+            }
             else
             {
                 MessageBox.Show("Ingen podd vald.");
