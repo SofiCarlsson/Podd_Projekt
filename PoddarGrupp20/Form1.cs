@@ -13,8 +13,8 @@ namespace PoddarGrupp20
     {
         private PoddController poddkontroll;
         private KategoriController kategoriController;
-        private int? valdKategoriId = null; 
-        private Validering validering = new Validering(); 
+        private int? valdKategoriId = null;
+        private Validering validering = new Validering();
 
         public Form1()
         {
@@ -31,20 +31,20 @@ namespace PoddarGrupp20
         {
             lbxMinaPoddar.Items.Clear();
 
-            foreach (var podd in poddar) 
+            foreach (var podd in poddar)
             {
-                lbxMinaPoddar.Items.Add(podd); 
+                lbxMinaPoddar.Items.Add(podd);
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            UpdateComboBox(); 
+            UpdateComboBox();
         }
 
         private void UpdateComboBox()
         {
-            cbxKategori.Items.Clear(); 
+            cbxKategori.Items.Clear();
             foreach (var item in lbxKategori.Items)
             {
                 cbxKategori.Items.Add(item);
@@ -83,7 +83,7 @@ namespace PoddarGrupp20
 
         private void UppdateraAvsnittListbox(Podd valdPodd)
         {
-            lbxAvsnitt.Items.Clear(); 
+            lbxAvsnitt.Items.Clear();
             foreach (var avsnitt in valdPodd.AvsnittLista)
             {
                 lbxAvsnitt.Items.Add(avsnitt.Namn);
@@ -93,7 +93,7 @@ namespace PoddarGrupp20
             if (lbxAvsnitt.Items.Count > 0)
             {
                 // Detta triggar SelectedIndexChanged
-                lbxAvsnitt.SelectedIndex = 0; 
+                lbxAvsnitt.SelectedIndex = 0;
             }
             else
             {
@@ -104,11 +104,11 @@ namespace PoddarGrupp20
 
         private void UppdateraPoddarListbox()
         {
-            lbxMinaPoddar.Items.Clear(); 
+            lbxMinaPoddar.Items.Clear();
 
-            foreach (var podd in poddkontroll.HämtaAllaPoddar()) 
+            foreach (var podd in poddkontroll.HämtaAllaPoddar())
             {
-                lbxMinaPoddar.Items.Add(podd); 
+                lbxMinaPoddar.Items.Add(podd);
             }
         }
 
@@ -139,8 +139,8 @@ namespace PoddarGrupp20
                 int nyttId = kategoriController.RetrieveAllKategorier().Count + 1;
                 kategoriController.CreateKategori(nyttId, tbxKategori.Text);
                 tbxKategori.Clear();
-                UppdateraKategoriListbox();  
-                UpdateComboBox();  
+                UppdateraKategoriListbox();
+                UpdateComboBox();
             }
             catch (ArgumentException ex)
             {
@@ -174,14 +174,14 @@ namespace PoddarGrupp20
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     MessageBox.Show(errorMessage);
-                    return; 
+                    return;
                 }
 
                 try
                 {
                     kategoriController.UpdateCategory(valdKategoriId.Value, tbxKategori.Text);
                     tbxKategori.Clear();
-                    valdKategoriId = null; 
+                    valdKategoriId = null;
                     UppdateraKategoriListbox();
                     UpdateComboBox();
                 }
@@ -209,7 +209,7 @@ namespace PoddarGrupp20
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     MessageBox.Show(errorMessage);
-                    return; 
+                    return;
                 }
 
                 var result = MessageBox.Show(
@@ -223,9 +223,9 @@ namespace PoddarGrupp20
                 {
                     try
                     {
-                        kategoriController.DeleteKategori(valdKategoriId.Value); 
-                        tbxKategori.Clear(); 
-                        valdKategoriId = null; 
+                        kategoriController.DeleteKategori(valdKategoriId.Value);
+                        tbxKategori.Clear();
+                        valdKategoriId = null;
 
                         UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
                         UppdateraKategoriListbox();
@@ -258,7 +258,7 @@ namespace PoddarGrupp20
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     MessageBox.Show(errorMessage);
-                    return; 
+                    return;
                 }
 
                 poddkontroll.AndraPodd(valtPoddNamn, nyttNamn, nyKategori);
@@ -300,8 +300,8 @@ namespace PoddarGrupp20
             if (lbxMinaPoddar.SelectedItem != null)
             {
                 var valdPodd = (Podd)lbxMinaPoddar.SelectedItem;
-                txbNamn.Text = valdPodd.Namn; 
-                UppdateraAvsnittListbox(valdPodd); 
+                txbNamn.Text = valdPodd.Namn;
+                UppdateraAvsnittListbox(valdPodd);
             }
         }
 
@@ -310,7 +310,7 @@ namespace PoddarGrupp20
         {
             if (lbxAvsnitt.SelectedItem != null)
             {
-                
+
                 var valdPodd = (Podd)lbxMinaPoddar.SelectedItem;
 
                 var valtAvsnittNamn = lbxAvsnitt.SelectedItem.ToString();
@@ -320,7 +320,7 @@ namespace PoddarGrupp20
 
                 if (valtAvsnitt != null)
                 {
-                    tbxInfo.Text = renBeskrivning; 
+                    tbxInfo.Text = renBeskrivning;
                 }
                 else
                 {
@@ -337,12 +337,17 @@ namespace PoddarGrupp20
             if (!string.IsNullOrEmpty(valdKategori))
             {
                 var filtreradePoddar = allaPoddar.Where(p => p.Kategori == valdKategori).ToList();
-                UppdateraPoddarListbox(filtreradePoddar); 
+                UppdateraPoddarListbox(filtreradePoddar);
             }
             else
             {
-                UppdateraPoddarListbox(allaPoddar); 
+                UppdateraPoddarListbox(allaPoddar);
             }
+        }
+
+        private void btnVisaAlla_Click(object sender, EventArgs e)
+        {
+            UppdateraPoddarListbox(poddkontroll.HämtaAllaPoddar());
         }
     }
 }
