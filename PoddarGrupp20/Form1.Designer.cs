@@ -51,6 +51,7 @@
             lblInfo = new Label();
             btnFiltrera = new Button();
             tbxInfo = new TextBox();
+            btnVisaAlla = new Button();
             SuspendLayout();
             // 
             // btnSök
@@ -262,11 +263,22 @@
             tbxInfo.Size = new Size(344, 388);
             tbxInfo.TabIndex = 25;
             // 
+            // btnVisaAlla
+            // 
+            btnVisaAlla.Location = new Point(772, 274);
+            btnVisaAlla.Name = "btnVisaAlla";
+            btnVisaAlla.Size = new Size(150, 46);
+            btnVisaAlla.TabIndex = 26;
+            btnVisaAlla.Text = "Visa alla";
+            btnVisaAlla.UseVisualStyleBackColor = true;
+            btnVisaAlla.Click += btnVisaAlla_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1820, 850);
+            Controls.Add(btnVisaAlla);
             Controls.Add(tbxInfo);
             Controls.Add(btnFiltrera);
             Controls.Add(lblInfo);
@@ -321,5 +333,6 @@
         private Label lblInfo;
         private Button btnFiltrera;
         private TextBox tbxInfo;
+        private Button btnVisaAlla;
     }
 }
