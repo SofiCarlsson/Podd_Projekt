@@ -10,16 +10,15 @@ namespace Models
 {
     public class Validering
     {
-        // Privat lista över befintliga kategorinamn
         private List<string> kategorier = new List<string>();
 
         public string NotEmpty(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                return "Fältet får inte vara tomt."; 
+                return "Fältet får inte vara tomt.";
             }
-            return string.Empty; 
+            return string.Empty;
         }
 
         public string VerifieraRSSLank(string rssLank)
@@ -27,7 +26,7 @@ namespace Models
             string emptyCheck = NotEmpty(rssLank);
             if (!string.IsNullOrEmpty(emptyCheck))
             {
-                return emptyCheck; 
+                return emptyCheck;
             }
 
             if (!Uri.IsWellFormedUriString(rssLank, UriKind.Absolute))
@@ -39,13 +38,31 @@ namespace Models
             {
                 using (XmlReader.Create(rssLank))
                 {
-                    return string.Empty; 
+                    return string.Empty;
                 }
             }
             catch (Exception)
             {
                 return "RSS-länken är inte giltig: kunde inte läsa in flödet.";
             }
+        }
+
+        public string ValidateUniqueId(List<Kategori> kategorier, int id)
+        {
+            if (kategorier.Any(k => k.Id == id))
+            {
+                return "En kategori med detta ID finns redan.";
+            }
+            return string.Empty;
+        }
+
+        public string ValidateUniqueName(List<Kategori> kategorier, string name)
+        {
+            if (kategorier.Any(k => k.Namn.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            {
+                return "En kategori med detta namn finns redan.";
+            }
+            return string.Empty;
         }
     }
 }

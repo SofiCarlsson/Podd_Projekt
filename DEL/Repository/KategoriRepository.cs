@@ -12,11 +12,13 @@ namespace DEL.Repository
         private const string filePath = "kategorier.xml";
         private Serializer<Kategori> kategoriSerializer;
         private List<Kategori> listAvKategori;
+        private Validering validering; // Skapa en instans av Validering
 
         public KategoriRepository()
         {
             kategoriSerializer = new Serializer<Kategori>(filePath);
             listAvKategori = LoadFromFile();
+            validering = new Validering();
         }
 
         public List<Kategori> GetAll()
@@ -26,20 +28,20 @@ namespace DEL.Repository
 
         public Kategori GetById(int id)
         {
-            return listAvKategori.FirstOrDefault(k => k.Id == id); 
+            return listAvKategori.FirstOrDefault(k => k.Id == id);
         }
 
         public void Insert(Kategori theObject)
         {
-            if (!listAvKategori.Any(k => k.Id == theObject.Id))
+            // Kontrollera att kategorin har ett unikt namn
+            if (listAvKategori.Any(k => k.Namn == theObject.Namn))
             {
-                listAvKategori.Add(theObject);
-                SaveChanges(); 
+                throw new ArgumentException("En kategori med detta namn finns redan.");
             }
-            else
-            {
-                throw new ArgumentException("Category already exists.");
-            }
+
+            // Lägg till kategorin om namnet är unikt
+            listAvKategori.Add(theObject);
+            SaveChanges();
         }
 
         public void Update(Kategori theNewObject)
