@@ -47,7 +47,8 @@ namespace Models
             }
         }
 
-        public string ValidateUniqueId(List<Kategori> kategorier, int id)
+        // Överlagrad metod för att validera unika ID:n
+        public string ValideraUnikKategori(List<Kategori> kategorier, int id)
         {
             if (kategorier.Any(k => k.Id == id))
             {
@@ -56,9 +57,10 @@ namespace Models
             return string.Empty;
         }
 
-        public string ValidateUniqueName(List<Kategori> kategorier, string name)
+        // Överlagrad metod för att validera unika namn
+        public string ValideraUnikKategori(List<Kategori> kategorier, string namn)
         {
-            if (kategorier.Any(k => k.Namn.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            if (kategorier.Any(k => k.Namn.Equals(namn, StringComparison.OrdinalIgnoreCase)))
             {
                 return "En kategori med detta namn finns redan.";
             }

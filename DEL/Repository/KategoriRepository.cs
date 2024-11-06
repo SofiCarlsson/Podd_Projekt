@@ -33,13 +33,21 @@ namespace DEL.Repository
 
         public void Insert(Kategori theObject)
         {
-            // Kontrollera att kategorin har ett unikt namn
-            if (listAvKategori.Any(k => k.Namn == theObject.Namn))
+            // Kontrollera att namnet är unikt
+            string namnValideraMeddelande = validering.ValideraUnikKategori(listAvKategori, theObject.Namn);
+            if (!string.IsNullOrEmpty(namnValideraMeddelande))
             {
-                throw new ArgumentException("En kategori med detta namn finns redan.");
+                throw new ArgumentException(namnValideraMeddelande);
             }
 
-            // Lägg till kategorin om namnet är unikt
+            // Kontrollera att ID är unikt 
+            string idValideraMeddelande = validering.ValideraUnikKategori(listAvKategori, theObject.Id);
+            if (!string.IsNullOrEmpty(idValideraMeddelande))
+            {
+                throw new ArgumentException(idValideraMeddelande);
+            }
+
+            
             listAvKategori.Add(theObject);
             SaveChanges();
         }
